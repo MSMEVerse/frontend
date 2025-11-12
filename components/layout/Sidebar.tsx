@@ -41,6 +41,7 @@ const creatorNavItems: NavItem[] = [
   { title: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
   { title: 'Profile', href: '/profile', icon: User },
   { title: 'Brands Marketplace', href: '/marketplace', icon: ShoppingBag },
+  { title: 'Chat with Brands', href: '/chat-brands', icon: MessageSquare },
   { title: 'Campaigns', href: '/campaigns', icon: Briefcase },
   { title: 'Wallet & Earnings', href: '/wallet', icon: Wallet },
   { title: 'Settings', href: '/settings', icon: Settings },

@@ -50,7 +50,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       
       if (USE_MOCK) {
         const { mockApi } = await import('@/lib/mocks');
-        const { user: userData, token } = await mockApi.login(email, password);
+        const { user: userData, token } = await mockApi.login(email, password, role);
         setUser(userData);
         if (typeof window !== 'undefined') {
           localStorage.setItem('token', token);

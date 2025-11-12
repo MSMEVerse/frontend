@@ -1423,8 +1423,47 @@ export const mockNotifications: Notification[] = [
 export const mockApi = {
   delay: (ms: number) => new Promise(resolve => setTimeout(resolve, ms)),
   
-  login: async (email: string, password: string) => {
+  login: async (email: string, password: string, role?: string) => {
     await mockApi.delay(1000);
+    
+    // Universal demo credentials that work for both roles
+    const DEMO_PASSWORD = 'demo123';
+    
+    // Check for universal demo credentials
+    if (password === DEMO_PASSWORD) {
+      // If role is specified, find a user with that role
+      if (role) {
+        const user = mockUsers.find(u => u.role === role);
+        if (user) {
+          return {
+            user,
+            token: 'mock-jwt-token',
+          };
+        }
+      }
+      
+      // If email matches a user, return that user
+      const user = mockUsers.find(u => u.email === email);
+      if (user) {
+        return {
+          user,
+          token: 'mock-jwt-token',
+        };
+      }
+      
+      // If no specific user found but role is provided, return first user with that role
+      if (role) {
+        const user = mockUsers.find(u => u.role === role);
+        if (user) {
+          return {
+            user,
+            token: 'mock-jwt-token',
+          };
+        }
+      }
+    }
+    
+    // Legacy support: check for specific email with 'password'
     const user = mockUsers.find(u => u.email === email);
     if (user && password === 'password') {
       return {
@@ -1432,6 +1471,7 @@ export const mockApi = {
         token: 'mock-jwt-token',
       };
     }
+    
     throw new Error('Invalid credentials');
   },
   

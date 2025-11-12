@@ -9,6 +9,7 @@ import { BrandFilters, User, MSMEProfile, Conversation, Message } from '@/lib/ty
 import { mockUsers, mockMSMEProfiles, mockConversations, mockDirectMessages } from '@/lib/mocks';
 import { useAuth } from '@/contexts/AuthContext';
 import { toast } from 'sonner';
+import { MessageCircle } from 'lucide-react';
 
 export default function ChatWithBrands() {
   const { user } = useAuth();
@@ -190,16 +191,16 @@ export default function ChatWithBrands() {
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-3xl font-bold tracking-tight">Chat with Brands</h1>
-        <p className="text-muted-foreground">
+      <div className="space-y-2">
+        <h1 className="text-3xl font-bold tracking-tight dark:text-[#FFFFFF]">Chat with Brands</h1>
+        <p className="text-muted-foreground dark:text-[#B9BBBE]">
           Search for brands and start conversations to explore collaboration opportunities
         </p>
       </div>
 
       <div className="grid lg:grid-cols-2 gap-6">
         {/* Left Column: Search and Results */}
-        <div className="space-y-4">
+        <div className="space-y-6">
           <BrandSearchFilters
             filters={filters}
             onFiltersChange={setFilters}
@@ -215,7 +216,7 @@ export default function ChatWithBrands() {
         </div>
 
         {/* Right Column: Chat Panel */}
-        <div>
+        <div className="lg:sticky lg:top-20 lg:h-[calc(100vh-6rem)]">
           {selectedBrand ? (
             <BrandChatPanel
               brand={selectedBrand}
@@ -225,8 +226,12 @@ export default function ChatWithBrands() {
               loading={loading}
             />
           ) : (
-            <div className="border-2 border-dashed rounded-lg p-12 text-center text-muted-foreground">
-              <p>Select a brand to start chatting</p>
+            <div className="border-2 border-dashed rounded-lg p-12 text-center text-muted-foreground h-full flex items-center justify-center dark:border-[rgba(255,255,255,0.06)] dark:text-[#B9BBBE]">
+              <div className="space-y-2">
+                <MessageCircle className="h-12 w-12 mx-auto opacity-50" />
+                <p className="font-medium">Select a brand to start chatting</p>
+                <p className="text-sm">Choose a brand from the list to view conversation history or start a new chat</p>
+              </div>
             </div>
           )}
         </div>

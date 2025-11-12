@@ -55,92 +55,102 @@ export default function BrandSearchResults({
   }
 
   return (
-    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-      {brands.map((brand) => {
-        const chatStatus = getConversationStatus(brand.id);
-        return (
-          <Card key={brand.id} className="hover:shadow-lg transition-shadow">
-            <CardContent className="pt-6">
-              <div className="flex items-start space-x-4">
-                <Avatar className="h-16 w-16">
-                  <AvatarImage src={brand.profile.logo || brand.avatar} />
-                  <AvatarFallback>
-                    {brand.profile.companyName?.[0]?.toUpperCase() || getInitials(brand)}
-                  </AvatarFallback>
-                </Avatar>
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center space-x-2 mb-1">
-                    <h3 className="font-semibold truncate">{brand.profile.companyName}</h3>
-                    {brand.profile.verified && (
-                      <Verified className="h-4 w-4 text-blue-500 flex-shrink-0" />
-                    )}
+    <div className="space-y-4">
+      <div className="text-sm text-muted-foreground">
+        {brands.length} {brands.length === 1 ? 'brand' : 'brands'} found
+      </div>
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {brands.map((brand) => {
+          const chatStatus = getConversationStatus(brand.id);
+          return (
+            <Card key={brand.id} className="hover:shadow-lg transition-all duration-200 flex flex-col h-full">
+              <CardContent className="pt-6 pb-4 flex-1">
+                <div className="flex flex-col space-y-4">
+                  <div className="flex items-start space-x-4">
+                    <Avatar className="h-16 w-16 flex-shrink-0 border-2 border-border">
+                      <AvatarImage src={brand.profile.logo || brand.avatar} />
+                      <AvatarFallback className="text-lg font-semibold">
+                        {brand.profile.companyName?.[0]?.toUpperCase() || getInitials(brand)}
+                      </AvatarFallback>
+                    </Avatar>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center space-x-2 mb-1">
+                        <h3 className="font-semibold text-base truncate">{brand.profile.companyName}</h3>
+                        {brand.profile.verified && (
+                          <Verified className="h-4 w-4 text-blue-500 flex-shrink-0" />
+                        )}
+                      </div>
+                      {chatStatus.status !== 'none' && (
+                        <div className="mb-2">
+                          {chatStatus.status === 'sent' && (
+                            <Badge variant="secondary" className="text-xs">
+                              Message sent
+                            </Badge>
+                          )}
+                          {chatStatus.status === 'chatting' && (
+                            <Badge className="bg-green-600 hover:bg-green-600 text-xs dark:bg-green-600 dark:text-white">
+                              Chatting
+                            </Badge>
+                          )}
+                        </div>
+                      )}
+                    </div>
                   </div>
+                  
                   {brand.profile.tagline && (
-                    <p className="text-sm text-muted-foreground line-clamp-2 mb-2">
+                    <p className="text-sm text-muted-foreground line-clamp-2 leading-relaxed">
                       {brand.profile.tagline}
                     </p>
                   )}
-                  <div className="flex flex-wrap gap-2 mb-2">
-                    {brand.profile.categories?.slice(0, 3).map((category, index) => (
-                      <Badge key={index} variant="secondary" className="text-xs">
-                        {category}
-                      </Badge>
-                    ))}
-                    {brand.profile.categories && brand.profile.categories.length > 3 && (
-                      <Badge variant="outline" className="text-xs">
-                        +{brand.profile.categories.length - 3}
-                      </Badge>
-                    )}
-                  </div>
-                  <div className="space-y-1 text-sm text-muted-foreground">
-                    {(brand.profile.city || brand.profile.state) && (
-                      <div className="flex items-center space-x-1">
-                        <MapPin className="h-3 w-3" />
-                        <span>
-                          {[brand.profile.city, brand.profile.state].filter(Boolean).join(', ')}
-                        </span>
-                      </div>
-                    )}
-                  </div>
-                  {chatStatus.status !== 'none' && (
-                    <div className="mt-2">
-                      {chatStatus.status === 'sent' && (
-                        <Badge variant="secondary" className="text-xs">
-                          Message sent
+                  
+                  {brand.profile.categories && brand.profile.categories.length > 0 && (
+                    <div className="flex flex-wrap gap-2">
+                      {brand.profile.categories.slice(0, 3).map((category, index) => (
+                        <Badge key={index} variant="secondary" className="text-xs">
+                          {category}
                         </Badge>
-                      )}
-                      {chatStatus.status === 'chatting' && (
-                        <Badge className="bg-green-600 hover:bg-green-600 text-xs">
-                          Chatting
+                      ))}
+                      {brand.profile.categories.length > 3 && (
+                        <Badge variant="outline" className="text-xs">
+                          +{brand.profile.categories.length - 3}
                         </Badge>
                       )}
                     </div>
                   )}
+                  
+                  {(brand.profile.city || brand.profile.state) && (
+                    <div className="flex items-center space-x-1 text-sm text-muted-foreground pt-1">
+                      <MapPin className="h-3.5 w-3.5 flex-shrink-0" />
+                      <span className="truncate">
+                        {[brand.profile.city, brand.profile.state].filter(Boolean).join(', ')}
+                      </span>
+                    </div>
+                  )}
                 </div>
-              </div>
-            </CardContent>
-            <CardFooter className="flex space-x-2">
-              <Button
-                variant="outline"
-                size="sm"
-                className="flex-1"
-                onClick={() => onViewProfile(brand)}
-              >
-                <Eye className="h-4 w-4 mr-2" />
-                View Profile
-              </Button>
-              <Button
-                size="sm"
-                className="flex-1"
-                onClick={() => onStartChat(brand)}
-              >
-                <MessageCircle className="h-4 w-4 mr-2" />
-                {chatStatus.status === 'none' ? 'Start Chat' : 'Open Chat'}
-              </Button>
-            </CardFooter>
-          </Card>
-        );
-      })}
+              </CardContent>
+              <CardFooter className="flex space-x-2 pt-0 pb-4">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="flex-1"
+                  onClick={() => onViewProfile(brand)}
+                >
+                  <Eye className="h-4 w-4 mr-2" />
+                  View Profile
+                </Button>
+                <Button
+                  size="sm"
+                  className="flex-1"
+                  onClick={() => onStartChat(brand)}
+                >
+                  <MessageCircle className="h-4 w-4 mr-2" />
+                  {chatStatus.status === 'none' ? 'Start Chat' : 'Open Chat'}
+                </Button>
+              </CardFooter>
+            </Card>
+          );
+        })}
+      </div>
     </div>
   );
 }

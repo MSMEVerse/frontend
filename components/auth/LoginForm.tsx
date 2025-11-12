@@ -117,11 +117,20 @@ export default function LoginForm() {
         {loading ? 'Logging in...' : 'Login'}
       </Button>
 
-      <div className="text-center text-sm">
-        Don't have an account?{' '}
-        <Link href="/register" className="text-primary hover:underline">
-          Register
-        </Link>
+      <div className="text-center text-sm space-y-2">
+        <div className="p-3 bg-muted rounded-md text-xs">
+          <p className="font-semibold mb-1">Demo Credentials:</p>
+          <p>Password: <code className="bg-background px-1 py-0.5 rounded">demo123</code></p>
+          <p className="mt-1 text-muted-foreground">Use any email + select role, or use existing emails like:</p>
+          <p className="text-muted-foreground">• <code className="bg-background px-1 py-0.5 rounded">msme@example.com</code> (MSME)</p>
+          <p className="text-muted-foreground">• <code className="bg-background px-1 py-0.5 rounded">creator@example.com</code> (Creator)</p>
+        </div>
+        <div>
+          Don't have an account?{' '}
+          <Link href="/register" className="text-primary hover:underline">
+            Register
+          </Link>
+        </div>
       </div>
     </form>
   );
