@@ -491,6 +491,19 @@ textarea::-moz-selection {
   color: #4752C4 !important;
 }
 
+/* Override link colors for sidebar navigation - use white, not blue */
+.dark aside a,
+.dark [class*="Sidebar"] a,
+.dark aside a:hover,
+.dark [class*="Sidebar"] a:hover {
+  color: inherit !important;
+}
+
+.dark aside a:hover,
+.dark [class*="Sidebar"] a:hover {
+  color: #FFFFFF !important;
+}
+
 /* ============================================
    DIVIDERS/SEPARATORS
    ============================================ */

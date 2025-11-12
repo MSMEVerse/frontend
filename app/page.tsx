@@ -5,24 +5,26 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 export default function HomePage() {
   return (
     <div className="flex flex-col items-center justify-center min-h-[calc(100vh-4rem)] px-4 py-12">
-      <div className="max-w-4xl mx-auto text-center space-y-8">
-        <h1 className="text-4xl md:text-6xl font-bold tracking-tight">
-          Welcome to <span className="text-primary">MSMEVerse</span>
-        </h1>
-        <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-          Connect MSMEs with Creators for impactful influencer marketing campaigns
-        </p>
+      <div className="max-w-4xl mx-auto w-full text-center space-y-8">
+        <div className="space-y-4">
+          <h1 className="text-4xl md:text-6xl font-bold tracking-tight">
+            Welcome to <span className="text-primary">MSMEVerse</span>
+          </h1>
+          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+            Connect MSMEs with Creators for impactful influencer marketing campaigns
+          </p>
+        </div>
 
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Button asChild size="lg">
+        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4">
+          <Button asChild size="lg" className="w-full sm:w-auto">
             <Link href="/register">Get Started</Link>
           </Button>
-          <Button asChild variant="outline" size="lg">
+          <Button asChild variant="outline" size="lg" className="w-full sm:w-auto">
             <Link href="/login">Login</Link>
           </Button>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-6 mt-12">
+        <div className="grid md:grid-cols-3 gap-6 mt-16">
           <Card>
             <CardHeader>
               <CardTitle>For MSMEs</CardTitle>

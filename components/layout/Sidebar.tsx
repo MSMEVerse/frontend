@@ -94,7 +94,7 @@ export default function Sidebar() {
                   'flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors group',
                   isActive
                     ? 'bg-primary text-primary-foreground dark:bg-[#5865F2] dark:text-[#FFFFFF]'
-                    : 'text-foreground/80 hover:bg-muted hover:text-foreground dark:text-[#B9BBBE] dark:hover:text-[#FFFFFF] dark:hover:bg-[rgba(255,255,255,0.1)]'
+                    : 'text-foreground/80 hover:bg-muted dark:text-[#B9BBBE] dark:hover:text-[#FFFFFF] dark:hover:bg-[rgba(255,255,255,0.1)]'
                 )}
               >
                 <Icon className={cn('mr-3 h-5 w-5 transition-colors', isActive ? 'text-primary-foreground dark:text-[#FFFFFF]' : 'text-muted-foreground dark:text-[#B9BBBE] dark:group-hover:text-[#FFFFFF]')} />

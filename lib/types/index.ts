@@ -31,6 +31,7 @@ export interface MSMEProfile {
   };
   categories?: string[];
   city?: string;
+  state?: string;
 }
 
 export interface CreatorPerformanceMetrics {
