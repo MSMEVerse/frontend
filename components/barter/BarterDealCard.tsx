@@ -3,7 +3,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { BarterDeal } from '@/lib/types';
+import { BarterDeal, MSMEProfile } from '@/lib/types';
 import { format } from 'date-fns';
 import { Eye, IndianRupee, Package, User } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
@@ -62,7 +62,9 @@ export default function BarterDealCard({ deal }: BarterDealCardProps) {
                     <span>
                       {isMSME
                         ? `${otherParty.firstName} ${otherParty.lastName}`
-                        : otherParty.profile?.companyName || `${otherParty.firstName} ${otherParty.lastName}`}
+                        : (otherParty.profile && 'companyName' in otherParty.profile
+                            ? (otherParty.profile as MSMEProfile).companyName
+                            : `${otherParty.firstName} ${otherParty.lastName}`)}
                     </span>
                   </>
                 )}

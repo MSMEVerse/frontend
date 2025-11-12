@@ -1,7 +1,7 @@
 'use client';
 
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { BarterDeal } from '@/lib/types';
+import { BarterDeal, MSMEProfile } from '@/lib/types';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { format } from 'date-fns';
@@ -88,10 +88,10 @@ export default function DealDetailsModal({
             {deal.status === 'NEGOTIATING' && (
               <TabsTrigger value="negotiation">Negotiation</TabsTrigger>
             )}
-            {(deal.status === 'PRODUCT_SHIPPED' || deal.status === 'PRODUCT_DELIVERED' || deal.status === 'IN_TRANSIT') && (
+            {(deal.status === 'PRODUCT_SHIPPED' || deal.status === 'PRODUCT_DELIVERED' || deal.delivery) && (
               <TabsTrigger value="delivery">Delivery</TabsTrigger>
             )}
-            {(deal.status === 'CONTENT_SUBMITTED' || deal.status === 'CONTENT_APPROVED' || deal.status === 'PENDING_REVIEW') && (
+            {(deal.status === 'CONTENT_SUBMITTED' || deal.status === 'CONTENT_APPROVED' || deal.content) && (
               <TabsTrigger value="content">Content</TabsTrigger>
             )}
             {deal.status === 'DISPUTED' && (
@@ -113,7 +113,9 @@ export default function DealDetailsModal({
                   {otherParty
                     ? isMSME
                       ? `${otherParty.firstName} ${otherParty.lastName}`
-                      : otherParty.profile?.companyName || `${otherParty.firstName} ${otherParty.lastName}`
+                      : (otherParty.profile && 'companyName' in otherParty.profile
+                          ? (otherParty.profile as MSMEProfile).companyName
+                          : `${otherParty.firstName} ${otherParty.lastName}`)
                     : 'N/A'}
                 </p>
               </div>

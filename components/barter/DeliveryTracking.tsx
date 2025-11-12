@@ -124,7 +124,7 @@ export default function DeliveryTracking({ deal }: DeliveryTrackingProps) {
         <ShippingForm deal={deal} onSuccess={() => setShowShippingForm(false)} />
       )}
 
-      {!isMSME && delivery.status === 'SHIPPED' && !delivery.deliveredAt && (
+      {!isMSME && (delivery.status === 'SHIPPED' || delivery.status === 'IN_TRANSIT') && !delivery.deliveredAt && (
         <DeliveryProofUpload deal={deal} onSuccess={() => setShowProofUpload(false)} />
       )}
     </div>

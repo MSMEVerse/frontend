@@ -3,7 +3,7 @@
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { BarterProduct } from '@/lib/types';
+import { BarterProduct, MSMEProfile } from '@/lib/types';
 import { Edit, Trash2, Package, IndianRupee } from 'lucide-react';
 import Image from 'next/image';
 
@@ -57,7 +57,9 @@ export default function ProductCard({
         </div>
         {product.brand && (
           <p className="text-xs text-muted-foreground">
-            by {product.brand.profile?.companyName || `${product.brand.firstName} ${product.brand.lastName}`}
+            by {product.brand.profile && 'companyName' in product.brand.profile
+              ? (product.brand.profile as MSMEProfile).companyName
+              : `${product.brand.firstName} ${product.brand.lastName}`}
           </p>
         )}
         <p className="text-xs text-muted-foreground mt-1">

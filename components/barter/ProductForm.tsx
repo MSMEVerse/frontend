@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { BarterProduct } from '@/lib/types';
+import { BarterProduct, BarterProductStatus } from '@/lib/types';
 import { toast } from 'sonner';
 
 interface ProductFormProps {
@@ -28,14 +28,22 @@ const CATEGORIES = [
 ];
 
 export default function ProductForm({ product, onSuccess, onCancel }: ProductFormProps) {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<{
+    name: string;
+    description: string;
+    category: string;
+    estimatedValue: string;
+    quantity: string;
+    status: BarterProductStatus;
+    images: string[];
+  }>({
     name: '',
     description: '',
     category: '',
     estimatedValue: '',
     quantity: '',
-    status: 'ACTIVE' as const,
-    images: [] as string[],
+    status: 'ACTIVE',
+    images: [],
   });
 
   useEffect(() => {

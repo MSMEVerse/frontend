@@ -2511,13 +2511,24 @@ export const mockBarterDeals: BarterDeal[] = [
 // Populate deal relationships
 mockBarterDeals.forEach(deal => {
   deal.product = mockBarterProducts.find(p => p.id === deal.productId);
-  deal.creator = mockUsers.find(u => u.id === deal.creatorId);
-  deal.brand = mockUsers.find(u => u.id === deal.brandId);
+  
+  const creatorUser = mockUsers.find(u => u.id === deal.creatorId);
+  const creatorProfile = mockCreatorProfiles.find(p => p.userId === deal.creatorId);
+  if (creatorUser && creatorProfile) {
+    deal.creator = { ...creatorUser, profile: creatorProfile };
+  }
+  
+  const brandUser = mockUsers.find(u => u.id === deal.brandId);
+  const brandProfile = mockMSMEProfiles.find(p => p.userId === deal.brandId);
+  if (brandUser && brandProfile) {
+    deal.brand = { ...brandUser, profile: brandProfile };
+  }
+  
   deal.delivery = mockBarterDeliveries.find(d => d.dealId === deal.id);
   deal.content = mockBarterContent.find(c => c.dealId === deal.id);
   deal.dispute = mockBarterDisputes.find(d => d.dealId === deal.id);
   
-  if (deal.product) {
+  if (deal.product && deal.brand) {
     deal.product.brand = deal.brand;
   }
 });
