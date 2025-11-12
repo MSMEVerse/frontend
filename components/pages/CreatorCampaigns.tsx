@@ -39,10 +39,11 @@ export default function CreatorCampaigns() {
     return campaign.selectedCreators.includes(user.id);
   };
 
-  // Browse campaigns: All open campaigns that creator hasn't been selected for yet
+  // Browse campaigns: All open campaigns that creator hasn't been selected for yet (excluding barter deals)
   const browseCampaigns = useMemo(() => {
     return mockCampaigns.filter((c) => {
       if (c.status !== 'OPEN' && c.status !== 'PENDING') return false;
+      if (c.type === 'BARTER') return false; // Exclude barter deals from browse
       if (isSelected(c)) return false; // Don't show campaigns where creator is already selected
       return true;
     });

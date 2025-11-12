@@ -7,11 +7,14 @@ import { mockBarterProducts, mockBarterDeals, mockBarterNegotiations } from '@/l
 import { BarterProduct, BarterDeal } from '@/lib/types';
 import ProductCatalog from '@/components/barter/ProductCatalog';
 import ProductForm from '@/components/barter/ProductForm';
+import ProposalForm from '@/components/barter/ProposalForm';
 import BarterDealCard from '@/components/barter/BarterDealCard';
 import BarterStats from '@/components/barter/BarterStats';
 import { Plus, Package, Briefcase, MessageSquare, History, AlertTriangle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { barterApi } from '@/lib/api/barter';
+import { toast } from 'sonner';
 
 export default function BarterPage() {
   const { user } = useAuth();
@@ -23,6 +26,8 @@ export default function BarterPage() {
   );
   const [productFormOpen, setProductFormOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState<BarterProduct | null>(null);
+  const [proposalFormOpen, setProposalFormOpen] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState<BarterProduct | null>(null);
 
   // Get user's products (for MSME)
   const myProducts = useMemo(() => {
@@ -86,12 +91,16 @@ export default function BarterPage() {
   };
 
   const handleProposeBarter = (product: BarterProduct) => {
-    // TODO: Navigate to deal creation or open negotiation modal
-    // For now, create a deal in PENDING status
-    console.log('Propose barter for product:', product.id);
-    // This would typically open a modal to propose content value
-    // For now, we'll just show a message
-    alert('Barter proposal functionality - would open negotiation modal');
+    setSelectedProduct(product);
+    setProposalFormOpen(true);
+  };
+
+  const handleProposalSuccess = async (dealId: string) => {
+    setProposalFormOpen(false);
+    setSelectedProduct(null);
+    // Switch to negotiations tab to see the new deal
+    setSelectedTab('negotiations');
+    toast.success('Barter proposal submitted! Check the Negotiations tab.');
   };
 
   if (!user) {
@@ -312,6 +321,25 @@ export default function BarterPage() {
               setEditingProduct(null);
             }}
           />
+        </DialogContent>
+      </Dialog>
+
+      {/* Proposal Form Dialog */}
+      <Dialog open={proposalFormOpen} onOpenChange={setProposalFormOpen}>
+        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>Propose Barter Deal</DialogTitle>
+          </DialogHeader>
+          {selectedProduct && (
+            <ProposalForm
+              product={selectedProduct}
+              onSuccess={handleProposalSuccess}
+              onCancel={() => {
+                setProposalFormOpen(false);
+                setSelectedProduct(null);
+              }}
+            />
+          )}
         </DialogContent>
       </Dialog>
     </div>

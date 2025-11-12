@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
@@ -20,12 +20,19 @@ import {
   Image,
   Building2,
   Repeat,
+  ChevronDown,
+  ChevronRight,
+  Search,
+  Clock,
+  CheckCircle2,
+  FileText as FileTextIcon,
 } from 'lucide-react';
 
 interface NavItem {
   title: string;
   href: string;
   icon: React.ComponentType<{ className?: string }>;
+  children?: NavItem[];
 }
 
 interface NavSection {
@@ -68,7 +75,17 @@ const creatorNavSections: NavSection[] = [
     label: 'Brands',
     items: [
       { title: 'Marketplace', href: '/marketplace', icon: ShoppingBag },
-      { title: 'Campaigns', href: '/campaigns', icon: Briefcase },
+      {
+        title: 'Campaigns',
+        href: '/campaigns',
+        icon: Briefcase,
+        children: [
+          { title: 'Browse Campaigns', href: '/campaigns/browse', icon: Search },
+          { title: 'Ongoing Campaigns', href: '/campaigns/ongoing', icon: Clock },
+          { title: 'Past Campaigns', href: '/campaigns/past', icon: CheckCircle2 },
+          { title: 'Applied', href: '/campaigns/applied', icon: FileTextIcon },
+        ],
+      },
       { title: 'Barter', href: '/barter', icon: Repeat },
     ],
   },
@@ -95,6 +112,93 @@ const adminNavSections: NavSection[] = [
     ],
   },
 ];
+
+function CollapsibleNavItem({ item, pathname }: { item: NavItem; pathname: string }) {
+  const [isOpen, setIsOpen] = useState(() => {
+    // Check if any child is active
+    if (item.children) {
+      return item.children.some((child) => {
+        const childPath = child.href.split('?')[0];
+        return pathname === child.href || pathname === childPath || pathname?.startsWith(childPath + '/');
+      });
+    }
+    return false;
+  });
+
+  const Icon = item.icon;
+  const hrefPath = item.href.split('?')[0];
+  const isActive = pathname === item.href || pathname === hrefPath || pathname?.startsWith(hrefPath + '/');
+  const hasActiveChild = item.children?.some((child) => {
+    const childPath = child.href.split('?')[0];
+    return pathname === child.href || pathname === childPath || pathname?.startsWith(childPath + '/');
+  });
+
+  if (item.children && item.children.length > 0) {
+    return (
+      <div>
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          className={cn(
+            'w-full flex items-center justify-between px-3 py-2 text-sm font-medium rounded-md transition-colors group',
+            (isActive || hasActiveChild)
+              ? 'bg-primary text-primary-foreground dark:bg-[#5865F2] dark:text-[#FFFFFF]'
+              : 'text-foreground/80 hover:bg-muted dark:text-[#B9BBBE] dark:hover:text-[#FFFFFF] dark:hover:bg-[rgba(255,255,255,0.1)]'
+          )}
+        >
+          <div className="flex items-center">
+            <Icon className={cn('mr-3 h-5 w-5 transition-colors', (isActive || hasActiveChild) ? 'text-primary-foreground dark:text-[#FFFFFF]' : 'text-muted-foreground dark:text-[#B9BBBE] dark:group-hover:text-[#FFFFFF]')} />
+            {item.title}
+          </div>
+          {isOpen ? (
+            <ChevronDown className="h-4 w-4" />
+          ) : (
+            <ChevronRight className="h-4 w-4" />
+          )}
+        </button>
+        {isOpen && (
+          <div className="ml-6 mt-1 space-y-1">
+            {item.children.map((child) => {
+              const ChildIcon = child.icon;
+              const childPath = child.href.split('?')[0];
+              const isChildActive = pathname === child.href || pathname === childPath || pathname?.startsWith(childPath + '/');
+              
+              return (
+                <Link
+                  key={child.href}
+                  href={child.href}
+                  className={cn(
+                    'flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors group',
+                    isChildActive
+                      ? 'bg-primary text-primary-foreground dark:bg-[#5865F2] dark:text-[#FFFFFF]'
+                      : 'text-foreground/80 hover:bg-muted dark:text-[#B9BBBE] dark:hover:text-[#FFFFFF] dark:hover:bg-[rgba(255,255,255,0.1)]'
+                  )}
+                >
+                  <ChildIcon className={cn('mr-3 h-4 w-4 transition-colors', isChildActive ? 'text-primary-foreground dark:text-[#FFFFFF]' : 'text-muted-foreground dark:text-[#B9BBBE] dark:group-hover:text-[#FFFFFF]')} />
+                  {child.title}
+                </Link>
+              );
+            })}
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  return (
+    <Link
+      href={item.href}
+      className={cn(
+        'flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors group',
+        isActive
+          ? 'bg-primary text-primary-foreground dark:bg-[#5865F2] dark:text-[#FFFFFF]'
+          : 'text-foreground/80 hover:bg-muted dark:text-[#B9BBBE] dark:hover:text-[#FFFFFF] dark:hover:bg-[rgba(255,255,255,0.1)]'
+      )}
+    >
+      <Icon className={cn('mr-3 h-5 w-5 transition-colors', isActive ? 'text-primary-foreground dark:text-[#FFFFFF]' : 'text-muted-foreground dark:text-[#B9BBBE] dark:group-hover:text-[#FFFFFF]')} />
+      {item.title}
+    </Link>
+  );
+}
 
 export default function Sidebar() {
   const pathname = usePathname();
@@ -130,28 +234,9 @@ export default function Sidebar() {
                   </h3>
                 </div>
               )}
-              {section.items.map((item) => {
-                const Icon = item.icon;
-                // Handle query params in href for active state
-                const hrefPath = item.href.split('?')[0];
-                const isActive = pathname === item.href || pathname === hrefPath || pathname?.startsWith(hrefPath + '/');
-                
-                return (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    className={cn(
-                      'flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors group',
-                      isActive
-                        ? 'bg-primary text-primary-foreground dark:bg-[#5865F2] dark:text-[#FFFFFF]'
-                        : 'text-foreground/80 hover:bg-muted dark:text-[#B9BBBE] dark:hover:text-[#FFFFFF] dark:hover:bg-[rgba(255,255,255,0.1)]'
-                    )}
-                  >
-                    <Icon className={cn('mr-3 h-5 w-5 transition-colors', isActive ? 'text-primary-foreground dark:text-[#FFFFFF]' : 'text-muted-foreground dark:text-[#B9BBBE] dark:group-hover:text-[#FFFFFF]')} />
-                    {item.title}
-                  </Link>
-                );
-              })}
+              {section.items.map((item) => (
+                <CollapsibleNavItem key={item.href} item={item} pathname={pathname} />
+              ))}
             </div>
           ))}
         </nav>

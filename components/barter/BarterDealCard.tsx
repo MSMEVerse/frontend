@@ -9,6 +9,7 @@ import { Eye, IndianRupee, Package, User } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useState } from 'react';
 import DealDetailsModal from './DealDetailsModal';
+import Image from 'next/image';
 
 interface BarterDealCardProps {
   deal: BarterDeal;
@@ -49,6 +50,16 @@ export default function BarterDealCard({ deal }: BarterDealCardProps) {
   return (
     <>
       <Card className="hover:shadow-lg transition-shadow">
+        {deal.product?.images && deal.product.images.length > 0 && (
+          <div className="relative h-48 w-full overflow-hidden rounded-t-lg">
+            <Image
+              src={deal.product.images[0]}
+              alt={deal.product.name}
+              fill
+              className="object-cover"
+            />
+          </div>
+        )}
         <CardHeader>
           <div className="flex items-start justify-between">
             <div className="flex-1">
