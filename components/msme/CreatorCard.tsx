@@ -65,23 +65,23 @@ export default function CreatorCard({
           </div>
         </div>
       </CardContent>
-      <CardFooter className="flex space-x-2">
+      <CardFooter className="flex space-x-2 min-w-0">
         <Button
           variant="outline"
           size="sm"
-          className="flex-1"
+          className="flex-1 min-w-0"
           onClick={() => onViewProfile?.(creator.id)}
         >
-          <Eye className="h-4 w-4 mr-2" />
-          View Profile
+          <Eye className="h-4 w-4 mr-2 flex-shrink-0" />
+          <span className="truncate">View Profile</span>
         </Button>
         <Button
           size="sm"
-          className="flex-1"
+          className="flex-1 min-w-0"
           onClick={() => onStartCampaign?.(creator.id)}
         >
-          <MessageCircle className="h-4 w-4 mr-2" />
-          Reach Out
+          <MessageCircle className="h-4 w-4 mr-2 flex-shrink-0" />
+          <span className="truncate">Reach Out</span>
         </Button>
       </CardFooter>
     </Card>

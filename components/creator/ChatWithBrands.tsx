@@ -198,42 +198,47 @@ export default function ChatWithBrands() {
         </p>
       </div>
 
-      <div className="grid lg:grid-cols-2 gap-6">
-        {/* Left Column: Search and Results */}
-        <div className="space-y-6">
-          <BrandSearchFilters
-            filters={filters}
-            onFiltersChange={setFilters}
-            onSearchChange={setSearchQuery}
-          />
-          <BrandSearchResults
-            brands={filteredBrands}
-            conversations={conversations}
-            onViewProfile={handleViewProfile}
-            onStartChat={handleStartChat}
-            loading={loading}
-          />
-        </div>
-
-        {/* Right Column: Chat Panel */}
-        <div className="lg:sticky lg:top-20 lg:h-[calc(100vh-6rem)]">
-          {selectedBrand ? (
-            <BrandChatPanel
-              brand={selectedBrand}
-              conversation={currentConversation}
-              onSendMessage={handleSendMessage}
-              messages={messages}
+      <div className="space-y-6">
+        {/* Search and Filters */}
+        <BrandSearchFilters
+          filters={filters}
+          onFiltersChange={setFilters}
+          onSearchChange={setSearchQuery}
+        />
+        
+        {/* Main Content: Brands List and Chat Panel */}
+        <div className="grid lg:grid-cols-2 gap-6">
+          {/* Left Column: Brand Results */}
+          <div className="space-y-4">
+            <BrandSearchResults
+              brands={filteredBrands}
+              conversations={conversations}
+              onViewProfile={handleViewProfile}
+              onStartChat={handleStartChat}
               loading={loading}
             />
-          ) : (
-            <div className="border-2 border-dashed rounded-lg p-12 text-center text-muted-foreground h-full flex items-center justify-center dark:border-[rgba(255,255,255,0.06)] dark:text-[#B9BBBE]">
-              <div className="space-y-2">
-                <MessageCircle className="h-12 w-12 mx-auto opacity-50" />
-                <p className="font-medium">Select a brand to start chatting</p>
-                <p className="text-sm">Choose a brand from the list to view conversation history or start a new chat</p>
+          </div>
+
+          {/* Right Column: Chat Panel */}
+          <div className="lg:sticky lg:top-20 lg:h-[calc(100vh-6rem)]">
+            {selectedBrand ? (
+              <BrandChatPanel
+                brand={selectedBrand}
+                conversation={currentConversation}
+                onSendMessage={handleSendMessage}
+                messages={messages}
+                loading={loading}
+              />
+            ) : (
+              <div className="border-2 border-dashed rounded-lg p-12 text-center text-muted-foreground h-full flex items-center justify-center dark:border-[rgba(255,255,255,0.06)] dark:text-[#B9BBBE]">
+                <div className="space-y-2">
+                  <MessageCircle className="h-12 w-12 mx-auto opacity-50" />
+                  <p className="font-medium">Select a brand to start chatting</p>
+                  <p className="text-sm">Choose a brand from the list to view conversation history or start a new chat</p>
+                </div>
               </div>
-            </div>
-          )}
+            )}
+          </div>
         </div>
       </div>
 

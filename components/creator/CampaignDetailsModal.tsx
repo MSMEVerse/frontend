@@ -183,11 +183,11 @@ export default function CampaignDetailsModal({
             </div>
 
             {/* Action Buttons */}
-            <div className="flex space-x-4">
+            <div className="flex space-x-4 min-w-0">
               {!hasApplied ? (
-                <Button onClick={handleApply} className="flex-1">
-                  <MessageCircle className="h-4 w-4 mr-2" />
-                  Apply to Campaign
+                <Button onClick={handleApply} className="flex-1 min-w-0">
+                  <MessageCircle className="h-4 w-4 mr-2 flex-shrink-0" />
+                  <span className="truncate">Apply to Campaign</span>
                 </Button>
               ) : (
                 <div className="flex-1">

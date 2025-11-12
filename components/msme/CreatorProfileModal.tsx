@@ -146,12 +146,12 @@ export default function CreatorProfileModal({
             </TabsContent>
           </Tabs>
 
-          <div className="flex space-x-4">
-            <Button onClick={handleLaunchCampaign} className="flex-1">
-              Launch Campaign
+          <div className="flex space-x-4 min-w-0">
+            <Button onClick={handleLaunchCampaign} className="flex-1 min-w-0">
+              <span className="truncate">Launch Campaign</span>
             </Button>
-            <Button variant="outline" className="flex-1">
-              Message Creator
+            <Button variant="outline" className="flex-1 min-w-0">
+              <span className="truncate">Message Creator</span>
             </Button>
           </div>
         </div>

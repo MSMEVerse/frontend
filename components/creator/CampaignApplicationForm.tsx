@@ -159,17 +159,18 @@ export default function CampaignApplicationForm({
               </p>
             </div>
 
-            <div className="flex space-x-4">
-              <Button type="submit" disabled={isSubmitting} className="flex-1">
-                {isSubmitting ? 'Submitting...' : 'Submit Application'}
+            <div className="flex space-x-4 min-w-0">
+              <Button type="submit" disabled={isSubmitting} className="flex-1 min-w-0">
+                <span className="truncate">{isSubmitting ? 'Submitting...' : 'Submit Application'}</span>
               </Button>
               <Button
                 type="button"
                 variant="outline"
+                className="flex-1 min-w-0"
                 onClick={() => onOpenChange(false)}
                 disabled={isSubmitting}
               >
-                Cancel
+                <span className="truncate">Cancel</span>
               </Button>
             </div>
           </form>

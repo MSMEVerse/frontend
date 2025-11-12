@@ -184,12 +184,12 @@ export default function MSMEProfileModal({
             </TabsContent>
           </Tabs>
 
-          <div className="flex space-x-4">
-            <Button onClick={handleApply} className="flex-1">
-              Apply for Campaign
+          <div className="flex space-x-4 min-w-0">
+            <Button onClick={handleApply} className="flex-1 min-w-0">
+              <span className="truncate">Apply for Campaign</span>
             </Button>
-            <Button variant="outline" className="flex-1">
-              Message Brand
+            <Button variant="outline" className="flex-1 min-w-0">
+              <span className="truncate">Message Brand</span>
             </Button>
           </div>
         </div>

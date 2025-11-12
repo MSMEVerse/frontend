@@ -82,33 +82,33 @@ export default function CampaignCard({
             </div>
           )}
 
-          <div className="flex space-x-2 pt-2">
+          <div className="flex space-x-2 pt-2 min-w-0">
             <Button
               variant="outline"
               size="sm"
-              className="flex-1"
+              className="flex-1 min-w-0"
               onClick={onViewDetails}
             >
-              <Eye className="h-4 w-4 mr-2" />
-              View Details
+              <Eye className="h-4 w-4 mr-2 flex-shrink-0" />
+              <span className="truncate">View Details</span>
             </Button>
             {!hasApplied ? (
               <Button
                 size="sm"
-                className="flex-1"
+                className="flex-1 min-w-0"
                 onClick={onApply}
               >
-                <MessageCircle className="h-4 w-4 mr-2" />
-                Apply
+                <MessageCircle className="h-4 w-4 mr-2 flex-shrink-0" />
+                <span className="truncate">Apply</span>
               </Button>
             ) : (
               <Button
                 variant="outline"
                 size="sm"
-                className="flex-1"
+                className="flex-1 min-w-0"
                 onClick={onViewDetails}
               >
-                View Application
+                <span className="truncate">View Application</span>
               </Button>
             )}
           </div>

@@ -112,17 +112,17 @@ export default function CampaignCard({ campaign }: CampaignCardProps) {
           </div>
         </div>
       </CardContent>
-      <CardFooter className="flex space-x-2">
-        <Button variant="outline" size="sm" className="flex-1" asChild>
+      <CardFooter className="flex space-x-2 min-w-0">
+        <Button variant="outline" size="sm" className="flex-1 min-w-0" asChild>
           <Link href={`/campaigns/${campaign.id}`}>
-            <Eye className="h-4 w-4 mr-2" />
-            View Details
+            <Eye className="h-4 w-4 mr-2 flex-shrink-0" />
+            <span className="truncate">View Details</span>
           </Link>
         </Button>
         {campaign.creator && (
-          <Button variant="outline" size="sm" className="flex-1">
-            <MessageCircle className="h-4 w-4 mr-2" />
-            Message
+          <Button variant="outline" size="sm" className="flex-1 min-w-0">
+            <MessageCircle className="h-4 w-4 mr-2 flex-shrink-0" />
+            <span className="truncate">Message</span>
           </Button>
         )}
       </CardFooter>
