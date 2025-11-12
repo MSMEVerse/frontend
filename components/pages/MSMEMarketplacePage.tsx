@@ -106,8 +106,9 @@ export default function MSMEMarketplacePage() {
                 }
               }}
               onStartCampaign={(id) => {
-                // TODO: Navigate to campaign creation
-                console.log('Start campaign with creator:', id);
+                // Navigate to chat or reach out to creator
+                console.log('Reach out to creator:', id);
+                // TODO: Open chat or navigate to messaging
               }}
             />
           ))}

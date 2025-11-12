@@ -40,7 +40,7 @@ const msmeNavItems: NavItem[] = [
 const creatorNavItems: NavItem[] = [
   { title: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
   { title: 'Profile', href: '/profile', icon: User },
-  { title: 'Marketplace', href: '/marketplace', icon: ShoppingBag },
+  { title: 'Brands Marketplace', href: '/marketplace', icon: ShoppingBag },
   { title: 'Campaigns', href: '/campaigns', icon: Briefcase },
   { title: 'Wallet & Earnings', href: '/wallet', icon: Wallet },
   { title: 'Settings', href: '/settings', icon: Settings },

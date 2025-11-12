@@ -14,11 +14,12 @@ export default function ConditionalLayout({
   const pathname = usePathname();
   const { user } = useAuth();
   const isAuthPage = pathname === '/login' || pathname === '/register';
+  const isHomePage = pathname === '/';
   
   // Hide footer for creator and MSME dashboards
   const shouldHideFooter = user && (user.role === 'CREATOR' || user.role === 'MSME');
 
-  if (isAuthPage) {
+  if (isAuthPage || isHomePage) {
     return <>{children}</>;
   }
 
