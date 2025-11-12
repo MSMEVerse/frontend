@@ -18,6 +18,9 @@ import {
   mockBarterContent,
   mockBarterDisputes,
   mockBarterReviews,
+  mockUsers,
+  mockCreatorProfiles,
+  mockMSMEProfiles,
 } from '../mocks';
 
 // Products API
@@ -339,5 +342,60 @@ export const barterReviewsApi = {
     }
     return mockBarterReviews;
   },
+};
+
+// Unified Barter API
+export const barterApi = {
+  // Products
+  ...barterProductsApi,
+  
+  // Deals
+  ...barterDealsApi,
+  proposeDeal: async (productId: string, creatorId: string, proposedContentValue: number, deliverables: string[]): Promise<BarterDeal> => {
+    const product = mockBarterProducts.find(p => p.id === productId);
+    if (!product) {
+      throw new Error('Product not found');
+    }
+
+    const creatorUser = mockUsers.find(u => u.id === creatorId);
+    const creatorProfile = mockCreatorProfiles.find(p => p.userId === creatorId);
+    const brandUser = mockUsers.find(u => u.id === product.brandId);
+    const brandProfile = mockMSMEProfiles.find(p => p.userId === product.brandId);
+
+    const newDeal: BarterDeal = {
+      id: `bd${Date.now()}`,
+      productId,
+      creatorId,
+      brandId: product.brandId,
+      status: 'NEGOTIATING',
+      productValue: product.estimatedValue,
+      contentValue: proposedContentValue,
+      deliverables,
+      negotiationHistory: [],
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+      product,
+      creator: creatorUser && creatorProfile ? { ...creatorUser, profile: creatorProfile } : undefined,
+      brand: brandUser && brandProfile ? { ...brandUser, profile: brandProfile } : undefined,
+    };
+    
+    mockBarterDeals.push(newDeal);
+    return newDeal;
+  },
+  
+  // Negotiations
+  ...barterNegotiationsApi,
+  
+  // Delivery
+  ...barterDeliveryApi,
+  
+  // Content
+  ...barterContentApi,
+  
+  // Disputes
+  ...barterDisputesApi,
+  
+  // Reviews
+  ...barterReviewsApi,
 };
 

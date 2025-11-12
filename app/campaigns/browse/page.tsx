@@ -5,7 +5,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { mockCampaigns } from '@/lib/mocks';
-import type { Campaign, CampaignFilters } from '@/lib/types';
+import type { Campaign, CampaignFilters as CampaignFiltersType } from '@/lib/types';
 import CampaignPageLayout from '@/components/campaigns/CampaignPageLayout';
 import { StatCard } from '@/components/campaigns/CampaignStats';
 import CampaignFilters from '@/components/creator/CampaignFilters';
@@ -18,7 +18,7 @@ export default function BrowseCampaignsPage() {
   const { user, loading } = useAuth();
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState('');
-  const [filters, setFilters] = useState<CampaignFilters>({});
+  const [filters, setFilters] = useState<CampaignFiltersType>({});
   const [selectedCampaign, setSelectedCampaign] = useState<Campaign | null>(null);
   const [detailsModalOpen, setDetailsModalOpen] = useState(false);
 
