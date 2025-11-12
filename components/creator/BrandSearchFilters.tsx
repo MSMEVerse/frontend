@@ -42,7 +42,28 @@ const CITIES_BY_STATE: Record<string, string[]> = {
   'Punjab': ['Chandigarh', 'Ludhiana', 'Amritsar'],
 };
 
-const AVAILABLE_NICHES = ['Technology', 'Fashion', 'Food', 'Lifestyle', 'Beauty', 'Travel', 'Fitness', 'Gaming'];
+const AVAILABLE_NICHES = [
+  'Tech Reviews',
+  'Fashion Hauls',
+  'Food Vlogs',
+  'Beauty Tutorials',
+  'Gaming Content',
+  'Travel Vlogs',
+  'Fitness Tips',
+  'Lifestyle Content',
+  'Product Reviews',
+  'Unboxing Videos',
+  'Tutorials & How-To',
+  'Comedy Skits',
+  'Music Covers',
+  'DIY Projects',
+  'Motivational Content',
+  'Business & Finance',
+  'Education & Learning',
+  'Health & Wellness',
+  'Home & Decor',
+  'Parenting & Family'
+];
 const AVAILABLE_CATEGORIES = ['Technology', 'Software', 'Fashion', 'Food & Beverage', 'Lifestyle', 'Beauty', 'Travel', 'Fitness', 'Gaming', 'E-commerce', 'Education', 'Healthcare', 'Finance', 'Real Estate', 'Automotive'];
 
 export default function BrandSearchFilters({

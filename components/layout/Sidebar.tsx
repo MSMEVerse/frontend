@@ -19,6 +19,7 @@ import {
   ShoppingBag,
   Image,
   Building2,
+  Repeat,
 } from 'lucide-react';
 
 interface NavItem {
@@ -27,35 +28,72 @@ interface NavItem {
   icon: React.ComponentType<{ className?: string }>;
 }
 
-const msmeNavItems: NavItem[] = [
-  { title: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
-  { title: 'My Profile', href: '/profile', icon: User },
-  { title: 'Creator Marketplace', href: '/marketplace', icon: Users },
-  { title: 'Campaigns', href: '/campaigns', icon: Briefcase },
-  { title: 'Wallet & Transactions', href: '/wallet', icon: Wallet },
-  { title: 'Settings', href: '/settings', icon: Settings },
-  { title: 'Support', href: '/support', icon: MessageSquare },
+interface NavSection {
+  label?: string;
+  items: NavItem[];
+}
+
+const msmeNavSections: NavSection[] = [
+  {
+    items: [
+      { title: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
+      { title: 'My Profile', href: '/profile', icon: User },
+    ],
+  },
+  {
+    label: 'Brands',
+    items: [
+      { title: 'Creator Marketplace', href: '/marketplace', icon: Users },
+      { title: 'Campaigns', href: '/campaigns', icon: Briefcase },
+      { title: 'Barter', href: '/campaigns?type=barter', icon: Repeat },
+    ],
+  },
+  {
+    items: [
+      { title: 'Wallet & Transactions', href: '/wallet', icon: Wallet },
+      { title: 'Settings', href: '/settings', icon: Settings },
+      { title: 'Support', href: '/support', icon: MessageSquare },
+    ],
+  },
 ];
 
-const creatorNavItems: NavItem[] = [
-  { title: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
-  { title: 'Profile', href: '/profile', icon: User },
-  { title: 'Brands Marketplace', href: '/marketplace', icon: ShoppingBag },
-  { title: 'Chat with Brands', href: '/chat-brands', icon: MessageSquare },
-  { title: 'Campaigns', href: '/campaigns', icon: Briefcase },
-  { title: 'Wallet & Earnings', href: '/wallet', icon: Wallet },
-  { title: 'Settings', href: '/settings', icon: Settings },
-  { title: 'Support', href: '/support', icon: MessageSquare },
+const creatorNavSections: NavSection[] = [
+  {
+    items: [
+      { title: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
+      { title: 'Profile', href: '/profile', icon: User },
+    ],
+  },
+  {
+    label: 'Brands',
+    items: [
+      { title: 'Marketplace', href: '/marketplace', icon: ShoppingBag },
+      { title: 'Campaigns', href: '/campaigns', icon: Briefcase },
+      { title: 'Barter', href: '/campaigns?type=barter', icon: Repeat },
+    ],
+  },
+  {
+    items: [
+      { title: 'Chat with Brands', href: '/chat-brands', icon: MessageSquare },
+      { title: 'Wallet & Earnings', href: '/wallet', icon: Wallet },
+      { title: 'Settings', href: '/settings', icon: Settings },
+      { title: 'Support', href: '/support', icon: MessageSquare },
+    ],
+  },
 ];
 
-const adminNavItems: NavItem[] = [
-  { title: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
-  { title: 'User Management', href: '/users', icon: Users },
-  { title: 'Campaign Management', href: '/campaigns', icon: Briefcase },
-  { title: 'Transactions', href: '/transactions', icon: Wallet },
-  { title: 'Reports & Analytics', href: '/reports', icon: BarChart3 },
-  { title: 'Support Tickets', href: '/support', icon: MessageSquare },
-  { title: 'CMS', href: '/cms', icon: FileText },
+const adminNavSections: NavSection[] = [
+  {
+    items: [
+      { title: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
+      { title: 'User Management', href: '/users', icon: Users },
+      { title: 'Campaign Management', href: '/campaigns', icon: Briefcase },
+      { title: 'Transactions', href: '/transactions', icon: Wallet },
+      { title: 'Reports & Analytics', href: '/reports', icon: BarChart3 },
+      { title: 'Support Tickets', href: '/support', icon: MessageSquare },
+      { title: 'CMS', href: '/cms', icon: FileText },
+    ],
+  },
 ];
 
 export default function Sidebar() {
@@ -64,45 +102,58 @@ export default function Sidebar() {
 
   if (!user) return null;
 
-  const getNavItems = (): NavItem[] => {
+  const getNavSections = (): NavSection[] => {
     switch (user.role) {
       case 'MSME':
-        return msmeNavItems;
+        return msmeNavSections;
       case 'CREATOR':
-        return creatorNavItems;
+        return creatorNavSections;
       case 'ADMIN':
-        return adminNavItems;
+        return adminNavSections;
       default:
         return [];
     }
   };
 
-  const navItems = getNavItems();
+  const navSections = getNavSections();
 
   return (
     <aside className="hidden lg:flex lg:flex-col lg:w-64 lg:fixed lg:inset-y-0 lg:pt-16 lg:border-r bg-background dark:bg-[#2F3136] dark:border-[rgba(255,255,255,0.06)]">
       <div className="flex-1 flex flex-col overflow-y-auto">
-        <nav className="flex-1 px-3 py-4 space-y-1">
-          {navItems.map((item) => {
-            const Icon = item.icon;
-            const isActive = pathname === item.href || pathname?.startsWith(item.href + '/');
-            
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={cn(
-                  'flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors group',
-                  isActive
-                    ? 'bg-primary text-primary-foreground dark:bg-[#5865F2] dark:text-[#FFFFFF]'
-                    : 'text-foreground/80 hover:bg-muted dark:text-[#B9BBBE] dark:hover:text-[#FFFFFF] dark:hover:bg-[rgba(255,255,255,0.1)]'
-                )}
-              >
-                <Icon className={cn('mr-3 h-5 w-5 transition-colors', isActive ? 'text-primary-foreground dark:text-[#FFFFFF]' : 'text-muted-foreground dark:text-[#B9BBBE] dark:group-hover:text-[#FFFFFF]')} />
-                {item.title}
-              </Link>
-            );
-          })}
+        <nav className="flex-1 px-3 py-4 space-y-6">
+          {navSections.map((section, sectionIndex) => (
+            <div key={sectionIndex} className="space-y-1">
+              {section.label && (
+                <div className="px-3 py-2">
+                  <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider dark:text-[#B9BBBE]">
+                    {section.label}
+                  </h3>
+                </div>
+              )}
+              {section.items.map((item) => {
+                const Icon = item.icon;
+                // Handle query params in href for active state
+                const hrefPath = item.href.split('?')[0];
+                const isActive = pathname === item.href || pathname === hrefPath || pathname?.startsWith(hrefPath + '/');
+                
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className={cn(
+                      'flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors group',
+                      isActive
+                        ? 'bg-primary text-primary-foreground dark:bg-[#5865F2] dark:text-[#FFFFFF]'
+                        : 'text-foreground/80 hover:bg-muted dark:text-[#B9BBBE] dark:hover:text-[#FFFFFF] dark:hover:bg-[rgba(255,255,255,0.1)]'
+                    )}
+                  >
+                    <Icon className={cn('mr-3 h-5 w-5 transition-colors', isActive ? 'text-primary-foreground dark:text-[#FFFFFF]' : 'text-muted-foreground dark:text-[#B9BBBE] dark:group-hover:text-[#FFFFFF]')} />
+                    {item.title}
+                  </Link>
+                );
+              })}
+            </div>
+          ))}
         </nav>
 
         {/* User Profile Section */}
