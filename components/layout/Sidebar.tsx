@@ -45,7 +45,7 @@ const msmeNavSections: NavSection[] = [
     items: [
       { title: 'Creator Marketplace', href: '/marketplace', icon: Users },
       { title: 'Campaigns', href: '/campaigns', icon: Briefcase },
-      { title: 'Barter', href: '/campaigns?type=barter', icon: Repeat },
+      { title: 'Barter', href: '/barter', icon: Repeat },
     ],
   },
   {
@@ -69,7 +69,7 @@ const creatorNavSections: NavSection[] = [
     items: [
       { title: 'Marketplace', href: '/marketplace', icon: ShoppingBag },
       { title: 'Campaigns', href: '/campaigns', icon: Briefcase },
-      { title: 'Barter', href: '/campaigns?type=barter', icon: Repeat },
+      { title: 'Barter', href: '/barter', icon: Repeat },
     ],
   },
   {

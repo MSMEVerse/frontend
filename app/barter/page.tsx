@@ -3,17 +3,15 @@
 import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
-import ChatWithBrands from '@/components/creator/ChatWithBrands';
+import BarterPage from '@/components/pages/BarterPage';
 
-export default function ChatBrandsPage() {
+export default function BarterRoute() {
   const { user, loading } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
     if (!loading && !user) {
       router.push('/login');
-    } else if (!loading && user && user.role !== 'CREATOR') {
-      router.push('/dashboard');
     }
   }, [user, loading, router]);
 
@@ -25,11 +23,10 @@ export default function ChatBrandsPage() {
     );
   }
 
-  if (!user || user.role !== 'CREATOR') {
+  if (!user) {
     return null;
   }
 
-  return <ChatWithBrands />;
+  return <BarterPage />;
 }
-
 

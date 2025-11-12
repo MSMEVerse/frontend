@@ -1,4 +1,4 @@
-import { User, Campaign, Transaction, Message, Notification, CreatorProfile, MSMEProfile, CampaignApplication, Conversation } from '../types';
+import { User, Campaign, Transaction, Message, Notification, CreatorProfile, MSMEProfile, CampaignApplication, Conversation, BarterProduct, BarterDeal, BarterNegotiation, BarterDelivery, BarterContent, BarterDispute, BarterReview } from '../types';
 
 // Mock Users - Expanded with lots of data
 export const mockUsers: User[] = [
@@ -1004,6 +1004,114 @@ export const mockCampaignApplications: CampaignApplication[] = [
       profile: mockCreatorProfiles[8],
     },
   },
+  {
+    id: '11',
+    campaignId: '2',
+    creatorId: '2',
+    proposal: 'Tech influencer with strong following in software and SaaS products. I can create detailed review videos and tutorial content. My audience is highly engaged with tech product reviews.',
+    status: 'PENDING',
+    createdAt: new Date(Date.now() - 4 * 24 * 60 * 60 * 1000).toISOString(),
+    creator: {
+      ...mockUsers.find(u => u.id === '2')!,
+      profile: mockCreatorProfiles[0],
+    },
+  },
+  {
+    id: '12',
+    campaignId: '5',
+    creatorId: '3',
+    proposal: 'Food blogger with expertise in restaurant reviews and food photography. I can create engaging food content that showcases your menu beautifully. My followers love discovering new restaurants.',
+    status: 'PENDING',
+    createdAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
+    creator: {
+      ...mockUsers.find(u => u.id === '3')!,
+      profile: mockCreatorProfiles[1],
+    },
+  },
+  {
+    id: '13',
+    campaignId: '7',
+    creatorId: '12',
+    proposal: 'Fashion influencer specializing in home decor and lifestyle content. I can create beautiful home styling content that showcases your products. My audience appreciates quality home decor.',
+    status: 'PENDING',
+    createdAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
+    creator: {
+      ...mockUsers.find(u => u.id === '12')!,
+      profile: mockCreatorProfiles[3],
+    },
+  },
+  {
+    id: '14',
+    campaignId: '11',
+    creatorId: '14',
+    proposal: 'Beauty content creator with expertise in skincare and makeup tutorials. I can create comprehensive app review content with beauty focus. My audience loves beauty tech content.',
+    status: 'PENDING',
+    createdAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
+    creator: {
+      ...mockUsers.find(u => u.id === '14')!,
+      profile: mockCreatorProfiles[5],
+    },
+  },
+  {
+    id: '15',
+    campaignId: '14',
+    creatorId: '15',
+    proposal: 'Fitness influencer with expertise in workout routines and transformation content. I can create engaging skincare challenge content from a wellness perspective. My audience values holistic health.',
+    status: 'PENDING',
+    createdAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
+    creator: {
+      ...mockUsers.find(u => u.id === '15')!,
+      profile: mockCreatorProfiles[6],
+    },
+  },
+  {
+    id: '16',
+    campaignId: '2',
+    creatorId: '14',
+    proposal: 'Fashion and beauty influencer with strong engagement in seasonal fashion content. I can create stunning fashion content that aligns with your summer collection. My audience loves trendy fashion.',
+    status: 'APPROVED',
+    createdAt: new Date(Date.now() - 6 * 24 * 60 * 60 * 1000).toISOString(),
+    creator: {
+      ...mockUsers.find(u => u.id === '14')!,
+      profile: mockCreatorProfiles[5],
+    },
+  },
+  {
+    id: '17',
+    campaignId: '5',
+    creatorId: '17',
+    proposal: 'Gaming and tech content creator with expertise in product reviews. I can create food content with a tech-savvy twist. My audience appreciates unique content angles.',
+    status: 'REJECTED',
+    createdAt: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(),
+    creator: {
+      ...mockUsers.find(u => u.id === '17')!,
+      profile: mockCreatorProfiles[8],
+    },
+  },
+  {
+    id: '18',
+    campaignId: '7',
+    creatorId: '2',
+    proposal: 'Tech reviewer with expertise in home automation and smart home products. I can create comprehensive reviews of your home decor products with tech integration focus. My audience loves smart home content.',
+    status: 'PENDING',
+    createdAt: new Date(Date.now() - 4 * 24 * 60 * 60 * 1000).toISOString(),
+    creator: {
+      ...mockUsers.find(u => u.id === '2')!,
+      profile: mockCreatorProfiles[0],
+    },
+  },
+  {
+    id: '19',
+    campaignId: '11',
+    creatorId: '3',
+    proposal: 'Food content creator with expertise in recipe videos and cooking tutorials. I can create app review content with a food and lifestyle angle. My audience loves discovering new apps for foodies.',
+    status: 'REJECTED',
+    createdAt: new Date(Date.now() - 8 * 24 * 60 * 60 * 1000).toISOString(),
+    creator: {
+      ...mockUsers.find(u => u.id === '3')!,
+      profile: mockCreatorProfiles[1],
+    },
+  },
 ];
 
 // Mock Campaigns - Expanded with lots of data
@@ -1516,6 +1624,192 @@ export const mockCampaigns: Campaign[] = [
       profile: mockMSMEProfiles[1],
     },
   },
+  // Ongoing campaigns
+  {
+    id: '23',
+    msmeId: '1',
+    title: 'AI Software Promotion',
+    objective: 'Promote our new AI-powered software solution to tech-savvy audiences',
+    budget: 90000,
+    status: 'ONGOING',
+    type: 'PAID',
+    deliverables: ['3 Instagram posts', '1 YouTube demo video', '5 Stories', 'LinkedIn post'],
+    startDate: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
+    endDate: new Date(Date.now() + 25 * 24 * 60 * 60 * 1000).toISOString(),
+    totalBudget: 120000,
+    budgetPerCreator: 12000,
+    creatorsCount: 10,
+    selectedCreators: ['2', '11'],
+    applications: [],
+    createdAt: new Date(Date.now() - 8 * 24 * 60 * 60 * 1000).toISOString(),
+    updatedAt: new Date().toISOString(),
+    msme: {
+      ...mockUsers.find(u => u.id === '1')!,
+      profile: mockMSMEProfiles[0],
+    },
+  },
+  {
+    id: '24',
+    msmeId: '5',
+    title: 'Restaurant Grand Opening',
+    objective: 'Create buzz for our new restaurant opening with food content',
+    budget: 65000,
+    status: 'ONGOING',
+    type: 'PAID',
+    deliverables: ['4 Instagram posts', '2 Reels', '10 Stories', 'Food review video'],
+    startDate: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
+    endDate: new Date(Date.now() + 27 * 24 * 60 * 60 * 1000).toISOString(),
+    totalBudget: 100000,
+    budgetPerCreator: 10000,
+    creatorsCount: 10,
+    selectedCreators: ['3', '11'],
+    applications: [],
+    createdAt: new Date(Date.now() - 6 * 24 * 60 * 60 * 1000).toISOString(),
+    updatedAt: new Date().toISOString(),
+    msme: {
+      ...mockUsers.find(u => u.id === '5')!,
+      profile: mockMSMEProfiles[2],
+    },
+  },
+  {
+    id: '25',
+    msmeId: '6',
+    title: 'Skincare Routine Challenge',
+    objective: '30-day skincare transformation challenge with our products',
+    budget: 80000,
+    status: 'PENDING_REVIEW',
+    type: 'PAID',
+    deliverables: ['Daily stories for 30 days', '3 Instagram posts', '1 transformation video', 'Before/after content'],
+    startDate: new Date(Date.now() - 20 * 24 * 60 * 60 * 1000).toISOString(),
+    endDate: new Date(Date.now() + 10 * 24 * 60 * 60 * 1000).toISOString(),
+    totalBudget: 150000,
+    budgetPerCreator: 15000,
+    creatorsCount: 10,
+    selectedCreators: ['14', '12'],
+    applications: [],
+    createdAt: new Date(Date.now() - 25 * 24 * 60 * 60 * 1000).toISOString(),
+    updatedAt: new Date().toISOString(),
+    msme: {
+      ...mockUsers.find(u => u.id === '6')!,
+      profile: mockMSMEProfiles[3],
+    },
+  },
+  {
+    id: '26',
+    msmeId: '7',
+    title: 'Home Workout Equipment Launch',
+    objective: 'Promote our new line of home fitness equipment',
+    budget: 70000,
+    status: 'PENDING_REVIEW',
+    type: 'PAID',
+    deliverables: ['3 workout videos', '5 Instagram posts', 'Equipment review', '10 Stories'],
+    startDate: new Date(Date.now() - 15 * 24 * 60 * 60 * 1000).toISOString(),
+    endDate: new Date(Date.now() + 15 * 24 * 60 * 60 * 1000).toISOString(),
+    totalBudget: 110000,
+    budgetPerCreator: 11000,
+    creatorsCount: 10,
+    selectedCreators: ['12', '15'],
+    applications: [],
+    createdAt: new Date(Date.now() - 18 * 24 * 60 * 60 * 1000).toISOString(),
+    updatedAt: new Date().toISOString(),
+    msme: {
+      ...mockUsers.find(u => u.id === '7')!,
+      profile: mockMSMEProfiles[4],
+    },
+  },
+  // Past campaigns
+  {
+    id: '27',
+    msmeId: '1',
+    title: 'Spring Tech Collection',
+    objective: 'Launch spring collection of tech accessories',
+    budget: 95000,
+    status: 'COMPLETED',
+    type: 'PAID',
+    deliverables: ['4 Instagram posts', '2 YouTube videos', '8 Stories', 'Product showcase'],
+    startDate: new Date(Date.now() - 80 * 24 * 60 * 60 * 1000).toISOString(),
+    endDate: new Date(Date.now() - 50 * 24 * 60 * 60 * 1000).toISOString(),
+    totalBudget: 140000,
+    budgetPerCreator: 14000,
+    creatorsCount: 10,
+    selectedCreators: ['2', '11', '3'],
+    applications: [],
+    createdAt: new Date(Date.now() - 85 * 24 * 60 * 60 * 1000).toISOString(),
+    updatedAt: new Date(Date.now() - 50 * 24 * 60 * 60 * 1000).toISOString(),
+    msme: {
+      ...mockUsers.find(u => u.id === '1')!,
+      profile: mockMSMEProfiles[0],
+    },
+  },
+  {
+    id: '28',
+    msmeId: '4',
+    title: 'Winter Fashion Line',
+    objective: 'Promote winter fashion collection',
+    budget: 110000,
+    status: 'RELEASED',
+    type: 'PAID',
+    deliverables: ['5 Instagram posts', '3 Reels', '12 Stories', 'Lookbook video'],
+    startDate: new Date(Date.now() - 70 * 24 * 60 * 60 * 1000).toISOString(),
+    endDate: new Date(Date.now() - 40 * 24 * 60 * 60 * 1000).toISOString(),
+    totalBudget: 160000,
+    budgetPerCreator: 16000,
+    creatorsCount: 10,
+    selectedCreators: ['3', '12', '14'],
+    applications: [],
+    createdAt: new Date(Date.now() - 75 * 24 * 60 * 60 * 1000).toISOString(),
+    updatedAt: new Date(Date.now() - 40 * 24 * 60 * 60 * 1000).toISOString(),
+    msme: {
+      ...mockUsers.find(u => u.id === '4')!,
+      profile: mockMSMEProfiles[1],
+    },
+  },
+  {
+    id: '29',
+    msmeId: '5',
+    title: 'Festival Food Special',
+    objective: 'Promote festival special menu items',
+    budget: 55000,
+    status: 'CLOSED',
+    type: 'PAID',
+    deliverables: ['3 Instagram posts', '1 Food vlog', '8 Stories', 'Recipe video'],
+    startDate: new Date(Date.now() - 90 * 24 * 60 * 60 * 1000).toISOString(),
+    endDate: new Date(Date.now() - 60 * 24 * 60 * 60 * 1000).toISOString(),
+    totalBudget: 90000,
+    budgetPerCreator: 9000,
+    creatorsCount: 10,
+    selectedCreators: ['3', '11'],
+    applications: [],
+    createdAt: new Date(Date.now() - 95 * 24 * 60 * 60 * 1000).toISOString(),
+    updatedAt: new Date(Date.now() - 60 * 24 * 60 * 60 * 1000).toISOString(),
+    msme: {
+      ...mockUsers.find(u => u.id === '5')!,
+      profile: mockMSMEProfiles[2],
+    },
+  },
+  {
+    id: '30',
+    msmeId: '6',
+    title: 'Beauty Product Launch',
+    objective: 'Launch new beauty product line',
+    budget: 85000,
+    status: 'COMPLETED',
+    type: 'PAID',
+    deliverables: ['4 Instagram posts', '2 Tutorial videos', '10 Stories', 'Product review'],
+    startDate: new Date(Date.now() - 100 * 24 * 60 * 60 * 1000).toISOString(),
+    endDate: new Date(Date.now() - 70 * 24 * 60 * 60 * 1000).toISOString(),
+    totalBudget: 130000,
+    budgetPerCreator: 13000,
+    creatorsCount: 10,
+    selectedCreators: ['14', '12'],
+    applications: [],
+    createdAt: new Date(Date.now() - 105 * 24 * 60 * 60 * 1000).toISOString(),
+    updatedAt: new Date(Date.now() - 70 * 24 * 60 * 60 * 1000).toISOString(),
+    msme: {
+      ...mockUsers.find(u => u.id === '6')!,
+      profile: mockMSMEProfiles[3],
+    },
+  },
 ];
 
 // Mock Transactions - Expanded
@@ -1863,4 +2157,385 @@ export const mockApi = {
     };
   },
 };
+
+// Mock Barter Products
+export const mockBarterProducts: BarterProduct[] = [
+  {
+    id: 'bp1',
+    brandId: '1',
+    name: 'Premium Wireless Headphones',
+    description: 'High-quality noise-cancelling wireless headphones with 30-hour battery life. Perfect for content creators who need professional audio equipment.',
+    category: 'Electronics',
+    images: [
+      'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500',
+      'https://images.unsplash.com/photo-1484704849700-f032a568e944?w=500',
+    ],
+    estimatedValue: 15000,
+    quantity: 5,
+    status: 'ACTIVE',
+    createdAt: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString(),
+    updatedAt: new Date().toISOString(),
+  },
+  {
+    id: 'bp2',
+    brandId: '4',
+    name: 'Designer Fashion Collection',
+    description: 'Complete fashion collection including 10 pieces of trendy clothing items. Perfect for fashion influencers and lifestyle creators.',
+    category: 'Fashion',
+    images: [
+      'https://images.unsplash.com/photo-1445205170230-053b83016050?w=500',
+      'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=500',
+    ],
+    estimatedValue: 25000,
+    quantity: 3,
+    status: 'ACTIVE',
+    createdAt: new Date(Date.now() - 20 * 24 * 60 * 60 * 1000).toISOString(),
+    updatedAt: new Date().toISOString(),
+  },
+  {
+    id: 'bp3',
+    brandId: '5',
+    name: 'Gourmet Food Hamper',
+    description: 'Premium food hamper with artisanal products, snacks, and beverages. Great for food bloggers and cooking content creators.',
+    category: 'Food & Beverage',
+    images: [
+      'https://images.unsplash.com/photo-1542838132-92c53300491e?w=500',
+      'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=500',
+    ],
+    estimatedValue: 8000,
+    quantity: 10,
+    status: 'ACTIVE',
+    createdAt: new Date(Date.now() - 15 * 24 * 60 * 60 * 1000).toISOString(),
+    updatedAt: new Date().toISOString(),
+  },
+  {
+    id: 'bp4',
+    brandId: '6',
+    name: 'Beauty Product Set',
+    description: 'Complete skincare and makeup set with premium brands. Perfect for beauty influencers and makeup artists.',
+    category: 'Beauty',
+    images: [
+      'https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=500',
+      'https://images.unsplash.com/photo-1522338242992-e1a54906a8da?w=500',
+    ],
+    estimatedValue: 12000,
+    quantity: 8,
+    status: 'ACTIVE',
+    createdAt: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000).toISOString(),
+    updatedAt: new Date().toISOString(),
+  },
+  {
+    id: 'bp5',
+    brandId: '1',
+    name: 'Smartphone for Review',
+    description: 'Latest flagship smartphone for tech review. Must return after review period or keep if deal is completed.',
+    category: 'Electronics',
+    images: [
+      'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=500',
+      'https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=500',
+    ],
+    estimatedValue: 60000,
+    quantity: 2,
+    status: 'ACTIVE',
+    createdAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
+    updatedAt: new Date().toISOString(),
+  },
+  {
+    id: 'bp6',
+    brandId: '7',
+    name: 'Fitness Equipment Bundle',
+    description: 'Complete home gym setup including dumbbells, resistance bands, yoga mat, and fitness accessories.',
+    category: 'Fitness',
+    images: [
+      'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=500',
+      'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=500',
+    ],
+    estimatedValue: 18000,
+    quantity: 4,
+    status: 'ACTIVE',
+    createdAt: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(),
+    updatedAt: new Date().toISOString(),
+  },
+];
+
+// Mock Barter Negotiations
+export const mockBarterNegotiations: BarterNegotiation[] = [
+  {
+    id: 'bn1',
+    dealId: 'bd1',
+    senderId: '2',
+    receiverId: '1',
+    message: 'Hi! I\'m interested in bartering for the wireless headphones. I can create 3 Instagram posts and 1 YouTube review video. What do you think?',
+    proposedProductValue: 15000,
+    proposedContentValue: 15000,
+    status: 'PENDING',
+    createdAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
+  },
+  {
+    id: 'bn2',
+    dealId: 'bd1',
+    senderId: '1',
+    receiverId: '2',
+    message: 'That sounds good! Could you also include 5 Instagram stories? If yes, we have a deal!',
+    proposedProductValue: 15000,
+    proposedContentValue: 18000,
+    status: 'ACCEPTED',
+    createdAt: new Date(Date.now() - 4 * 24 * 60 * 60 * 1000).toISOString(),
+  },
+  {
+    id: 'bn3',
+    dealId: 'bd2',
+    senderId: '3',
+    receiverId: '4',
+    message: 'I love the fashion collection! I can offer 2 Instagram posts, 1 reel, and 10 stories showcasing the pieces.',
+    proposedProductValue: 25000,
+    proposedContentValue: 25000,
+    status: 'PENDING',
+    createdAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
+  },
+];
+
+// Mock Barter Deliveries
+export const mockBarterDeliveries: BarterDelivery[] = [
+  {
+    id: 'bdel1',
+    dealId: 'bd1',
+    trackingNumber: 'TRACK123456789',
+    carrier: 'BlueDart',
+    status: 'DELIVERED',
+    shippedAt: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000).toISOString(),
+    deliveredAt: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(),
+    deliveryProof: ['https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=500'],
+    createdAt: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000).toISOString(),
+    updatedAt: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(),
+  },
+  {
+    id: 'bdel2',
+    dealId: 'bd2',
+    trackingNumber: 'TRACK987654321',
+    carrier: 'FedEx',
+    status: 'IN_TRANSIT',
+    shippedAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
+    createdAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
+    updatedAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
+  },
+  {
+    id: 'bdel3',
+    dealId: 'bd3',
+    trackingNumber: 'TRACK456789123',
+    carrier: 'DTDC',
+    status: 'SHIPPED',
+    shippedAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
+    createdAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
+    updatedAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
+  },
+];
+
+// Mock Barter Content
+export const mockBarterContent: BarterContent[] = [
+  {
+    id: 'bc1',
+    dealId: 'bd1',
+    creatorId: '2',
+    deliverables: [
+      '3 Instagram posts',
+      '1 YouTube review video',
+      '5 Instagram stories',
+    ],
+    files: [
+      'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800',
+      'https://images.unsplash.com/photo-1484704849700-f032a568e944?w=800',
+      'https://youtube.com/watch?v=example1',
+    ],
+    submittedAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
+    reviewedAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
+    status: 'APPROVED',
+    createdAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
+    updatedAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
+  },
+  {
+    id: 'bc2',
+    dealId: 'bd2',
+    creatorId: '3',
+    deliverables: [
+      '2 Instagram posts',
+      '1 reel',
+      '10 stories',
+    ],
+    files: [
+      'https://images.unsplash.com/photo-1445205170230-053b83016050?w=800',
+      'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=800',
+    ],
+    submittedAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
+    status: 'PENDING',
+    createdAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
+    updatedAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
+  },
+];
+
+// Mock Barter Disputes
+export const mockBarterDisputes: BarterDispute[] = [
+  {
+    id: 'bdis1',
+    dealId: 'bd4',
+    raisedBy: '11',
+    reason: 'PRODUCT_QUALITY',
+    description: 'The product received was damaged and not as described. The packaging was torn and the item has scratches.',
+    status: 'IN_REVIEW',
+    createdAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
+  },
+];
+
+// Mock Barter Reviews
+export const mockBarterReviews: BarterReview[] = [
+  {
+    id: 'br1',
+    dealId: 'bd1',
+    reviewerId: '2',
+    revieweeId: '1',
+    rating: 5,
+    comment: 'Great experience! The brand was professional and the product was exactly as described. Highly recommend!',
+    createdAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
+  },
+  {
+    id: 'br2',
+    dealId: 'bd1',
+    reviewerId: '1',
+    revieweeId: '2',
+    rating: 5,
+    comment: 'Excellent content creator! Delivered high-quality content on time. Would definitely work with again.',
+    createdAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
+  },
+];
+
+// Mock Barter Deals
+export const mockBarterDeals: BarterDeal[] = [
+  {
+    id: 'bd1',
+    productId: 'bp1',
+    creatorId: '2',
+    brandId: '1',
+    status: 'COMPLETED',
+    productValue: 15000,
+    contentValue: 18000,
+    deliverables: [
+      '3 Instagram posts',
+      '1 YouTube review video',
+      '5 Instagram stories',
+    ],
+    negotiationHistory: mockBarterNegotiations.filter(n => n.dealId === 'bd1'),
+    createdAt: new Date(Date.now() - 15 * 24 * 60 * 60 * 1000).toISOString(),
+    updatedAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
+  },
+  {
+    id: 'bd2',
+    productId: 'bp2',
+    creatorId: '3',
+    brandId: '4',
+    status: 'CONTENT_SUBMITTED',
+    productValue: 25000,
+    contentValue: 25000,
+    deliverables: [
+      '2 Instagram posts',
+      '1 reel',
+      '10 stories',
+    ],
+    negotiationHistory: mockBarterNegotiations.filter(n => n.dealId === 'bd2'),
+    createdAt: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000).toISOString(),
+    updatedAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
+  },
+  {
+    id: 'bd3',
+    productId: 'bp3',
+    creatorId: '11',
+    brandId: '5',
+    status: 'PRODUCT_SHIPPED',
+    productValue: 8000,
+    contentValue: 8000,
+    deliverables: [
+      '1 YouTube cooking video',
+      '3 Instagram posts',
+      '5 stories',
+    ],
+    createdAt: new Date(Date.now() - 8 * 24 * 60 * 60 * 1000).toISOString(),
+    updatedAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
+  },
+  {
+    id: 'bd4',
+    productId: 'bp4',
+    creatorId: '11',
+    brandId: '6',
+    status: 'DISPUTED',
+    productValue: 12000,
+    contentValue: 12000,
+    deliverables: [
+      '2 Instagram posts',
+      '1 reel',
+    ],
+    createdAt: new Date(Date.now() - 12 * 24 * 60 * 60 * 1000).toISOString(),
+    updatedAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
+  },
+  {
+    id: 'bd5',
+    productId: 'bp5',
+    creatorId: '17',
+    brandId: '1',
+    status: 'ACCEPTED',
+    productValue: 60000,
+    contentValue: 60000,
+    deliverables: [
+      '1 detailed YouTube review',
+      '2 Instagram posts',
+      '1 unboxing video',
+    ],
+    createdAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
+    updatedAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
+  },
+  {
+    id: 'bd6',
+    productId: 'bp6',
+    creatorId: '12',
+    brandId: '7',
+    status: 'NEGOTIATING',
+    productValue: 18000,
+    contentValue: 15000,
+    deliverables: [
+      '3 Instagram posts',
+      '1 workout video',
+    ],
+    createdAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
+    updatedAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
+  },
+];
+
+// Populate deal relationships
+mockBarterDeals.forEach(deal => {
+  deal.product = mockBarterProducts.find(p => p.id === deal.productId);
+  deal.creator = mockUsers.find(u => u.id === deal.creatorId);
+  deal.brand = mockUsers.find(u => u.id === deal.brandId);
+  deal.delivery = mockBarterDeliveries.find(d => d.dealId === deal.id);
+  deal.content = mockBarterContent.find(c => c.dealId === deal.id);
+  deal.dispute = mockBarterDisputes.find(d => d.dealId === deal.id);
+  
+  if (deal.product) {
+    deal.product.brand = deal.brand;
+  }
+});
+
+// Populate negotiation relationships
+mockBarterNegotiations.forEach(neg => {
+  neg.sender = mockUsers.find(u => u.id === neg.senderId);
+  neg.receiver = mockUsers.find(u => u.id === neg.receiverId);
+});
+
+// Populate dispute relationships
+mockBarterDisputes.forEach(dispute => {
+  dispute.raisedByUser = mockUsers.find(u => u.id === dispute.raisedBy);
+});
+
+// Populate review relationships
+mockBarterReviews.forEach(review => {
+  review.reviewer = mockUsers.find(u => u.id === review.reviewerId);
+  review.reviewee = mockUsers.find(u => u.id === review.revieweeId);
+});
 

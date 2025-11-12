@@ -242,6 +242,7 @@ export interface CreatorFilters {
   budgetRange?: [number, number];
   niche?: string[];
   platform?: string[];
+  engagementRateRange?: [number, number];
   verifiedOnly?: boolean;
 }
 
@@ -250,7 +251,11 @@ export interface CampaignFilters {
   type?: CampaignType;
   minBudget?: number;
   maxBudget?: number;
+  state?: string;
   city?: string;
+  categories?: string[];
+  startDate?: string;
+  endDate?: string;
 }
 
 export interface BrandFilters {
@@ -288,6 +293,116 @@ export interface CampaignFormData {
   startDate: string;
   endDate: string;
   creatorId?: string; // Deprecated: not used in new system
+}
+
+// Barter System Types
+export type BarterProductStatus = 'ACTIVE' | 'INACTIVE' | 'OUT_OF_STOCK';
+export type BarterDealStatus = 'PENDING' | 'NEGOTIATING' | 'ACCEPTED' | 'PRODUCT_SHIPPED' | 'PRODUCT_DELIVERED' | 'CONTENT_SUBMITTED' | 'CONTENT_APPROVED' | 'COMPLETED' | 'DISPUTED' | 'CANCELLED';
+export type BarterNegotiationStatus = 'PENDING' | 'ACCEPTED' | 'REJECTED';
+export type BarterDeliveryStatus = 'PENDING' | 'SHIPPED' | 'IN_TRANSIT' | 'DELIVERED';
+export type BarterContentStatus = 'PENDING' | 'APPROVED' | 'REVISION_REQUESTED';
+export type BarterDisputeStatus = 'OPEN' | 'IN_REVIEW' | 'RESOLVED' | 'CLOSED';
+export type BarterDisputeReason = 'PRODUCT_QUALITY' | 'PRODUCT_NOT_RECEIVED' | 'CONTENT_QUALITY' | 'CONTENT_NOT_SUBMITTED' | 'VALUE_MISMATCH' | 'OTHER';
+
+export interface BarterProduct {
+  id: string;
+  brandId: string;
+  name: string;
+  description: string;
+  category: string;
+  images: string[];
+  estimatedValue: number;
+  quantity: number;
+  status: BarterProductStatus;
+  createdAt: string;
+  updatedAt: string;
+  brand?: User & { profile: MSMEProfile };
+}
+
+export interface BarterDeal {
+  id: string;
+  productId: string;
+  creatorId: string;
+  brandId: string;
+  status: BarterDealStatus;
+  productValue: number;
+  contentValue: number;
+  deliverables: string[];
+  negotiationHistory?: BarterNegotiation[];
+  createdAt: string;
+  updatedAt: string;
+  product?: BarterProduct;
+  creator?: User & { profile: CreatorProfile };
+  brand?: User & { profile: MSMEProfile };
+  delivery?: BarterDelivery;
+  content?: BarterContent;
+  dispute?: BarterDispute;
+}
+
+export interface BarterNegotiation {
+  id: string;
+  dealId: string;
+  senderId: string;
+  receiverId: string;
+  message: string;
+  proposedProductValue?: number;
+  proposedContentValue?: number;
+  status: BarterNegotiationStatus;
+  createdAt: string;
+  sender?: User;
+  receiver?: User;
+}
+
+export interface BarterDelivery {
+  id: string;
+  dealId: string;
+  trackingNumber?: string;
+  carrier?: string;
+  status: BarterDeliveryStatus;
+  shippedAt?: string;
+  deliveredAt?: string;
+  deliveryProof?: string[];
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface BarterContent {
+  id: string;
+  dealId: string;
+  creatorId: string;
+  deliverables: string[];
+  files: string[];
+  submittedAt: string;
+  reviewedAt?: string;
+  status: BarterContentStatus;
+  revisionNotes?: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface BarterDispute {
+  id: string;
+  dealId: string;
+  raisedBy: string;
+  reason: BarterDisputeReason;
+  description: string;
+  status: BarterDisputeStatus;
+  resolution?: string;
+  createdAt: string;
+  resolvedAt?: string;
+  raisedByUser?: User;
+}
+
+export interface BarterReview {
+  id: string;
+  dealId: string;
+  reviewerId: string;
+  revieweeId: string;
+  rating: number;
+  comment?: string;
+  createdAt: string;
+  reviewer?: User;
+  reviewee?: User;
 }
 
 // Export analytics types
