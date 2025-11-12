@@ -19,9 +19,9 @@ export default function CreatorDashboard() {
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
-        <p className="text-muted-foreground">
+      <div className="flex flex-col space-y-2">
+        <h1 className="text-3xl font-bold tracking-tight dark:text-[#FFFFFF]">Dashboard</h1>
+        <p className="text-muted-foreground dark:text-[#B9BBBE]">
           Welcome back! Here's an overview of your account.
         </p>
       </div>

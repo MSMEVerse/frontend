@@ -40,17 +40,17 @@ export default function TopNav() {
   };
 
   return (
-    <nav className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-16 items-center justify-between px-4">
+    <nav className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 dark:bg-[#2F3136] dark:border-[rgba(255,255,255,0.06)]">
+      <div className="w-full flex h-16 items-center justify-between px-4 dark:bg-[#2F3136]">
         {/* Logo */}
-        <Link href="/" className="flex items-center space-x-2">
-          <span className="text-2xl font-bold text-primary">MSMEVerse</span>
+        <Link href="/" className="flex items-center space-x-2 flex-shrink-0">
+          <span className="text-2xl font-bold text-primary dark:text-[#5865F2]">MSMEVerse</span>
         </Link>
 
-        {/* Search Bar */}
-        <div className="hidden md:flex flex-1 max-w-md mx-4">
+        {/* Search Bar - Center */}
+        <div className="hidden md:flex flex-1 max-w-md mx-auto">
           <div className="relative w-full">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4 dark:text-[#B9BBBE]" />
             <Input
               type="text"
               placeholder="Search creators, brands, campaigns..."
@@ -61,30 +61,30 @@ export default function TopNav() {
           </div>
         </div>
 
-        {/* Right Side Actions */}
-        <div className="flex items-center space-x-4">
+        {/* Right Side Actions - Notifications, Chat, Profile */}
+        <div className="flex items-center space-x-2">
           {/* Wallet Balance */}
           {user && (
-            <div className="hidden lg:flex items-center space-x-2 px-3 py-2 bg-muted rounded-md">
-              <Wallet className="h-4 w-4 text-muted-foreground" />
-              <span className="text-sm font-medium">₹0.00</span>
+            <div className="hidden lg:flex items-center space-x-2 px-3 py-2 bg-muted rounded-md dark:bg-[#202225]">
+              <Wallet className="h-4 w-4 text-muted-foreground dark:text-[#B9BBBE]" />
+              <span className="text-sm font-medium dark:text-[#FFFFFF]">₹0.00</span>
             </div>
           )}
 
           {/* Notifications */}
           {user && <NotificationCenter />}
 
-          {/* Messages */}
+          {/* Messages/Chat */}
           {user && (
-            <Button variant="ghost" size="icon" className="relative">
-              <MessageCircle className="h-5 w-5" />
-              <Badge className="absolute -top-1 -right-1 h-5 w-5 p-0 flex items-center justify-center text-xs">
+            <Button variant="ghost" size="icon" className="relative dark:hover:bg-[rgba(255,255,255,0.1)]">
+              <MessageCircle className="h-5 w-5 dark:text-[#FFFFFF]" />
+              <Badge className="absolute -top-1 -right-1 h-5 w-5 p-0 flex items-center justify-center text-xs dark:bg-[#5865F2] dark:text-[#FFFFFF]">
                 0
               </Badge>
             </Button>
           )}
 
-          {/* User Menu */}
+          {/* User Profile Menu */}
           {user ? (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>

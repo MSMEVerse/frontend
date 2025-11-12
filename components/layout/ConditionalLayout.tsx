@@ -27,12 +27,12 @@ export default function ConditionalLayout({
   const isMSME = user?.role === 'MSME';
 
   return (
-    <div className={`flex flex-col min-h-screen ${isCreator ? 'dark' : ''}`}>
+    <div className={`flex flex-col min-h-screen ${isCreator ? 'dark' : ''} dark:bg-[#36393F]`}>
       <TopNav />
-      <div className="flex flex-1">
+      <div className="flex flex-1 dark:bg-[#36393F]">
         <Sidebar />
-        <main className="flex-1 lg:ml-64 pt-16 min-h-screen">
-          <div className="container mx-auto px-4 py-8">
+        <main className="flex-1 lg:ml-64 pt-16 min-h-screen dark:bg-[#36393F]">
+          <div className="container mx-auto px-4 py-8 dark:bg-[#36393F]">
             {children}
           </div>
         </main>

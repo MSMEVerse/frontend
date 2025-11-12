@@ -1,5 +1,6 @@
 'use client';
 
+import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
@@ -78,7 +79,7 @@ export default function Sidebar() {
   const navItems = getNavItems();
 
   return (
-    <aside className="hidden lg:flex lg:flex-col lg:w-64 lg:fixed lg:inset-y-0 lg:pt-16 lg:border-r bg-background">
+    <aside className="hidden lg:flex lg:flex-col lg:w-64 lg:fixed lg:inset-y-0 lg:pt-16 lg:border-r bg-background dark:bg-[#2F3136] dark:border-[rgba(255,255,255,0.06)]">
       <div className="flex-1 flex flex-col overflow-y-auto">
         <nav className="flex-1 px-3 py-4 space-y-1">
           {navItems.map((item) => {
@@ -90,13 +91,13 @@ export default function Sidebar() {
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  'flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors',
+                  'flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors group',
                   isActive
-                    ? 'bg-primary text-primary-foreground'
-                    : 'text-foreground/80 hover:bg-muted hover:text-foreground'
+                    ? 'bg-primary text-primary-foreground dark:bg-[#5865F2] dark:text-[#FFFFFF]'
+                    : 'text-foreground/80 hover:bg-muted hover:text-foreground dark:text-[#B9BBBE] dark:hover:text-[#FFFFFF] dark:hover:bg-[rgba(255,255,255,0.1)]'
                 )}
               >
-                <Icon className={cn('mr-3 h-5 w-5', isActive ? 'text-primary-foreground' : 'text-muted-foreground')} />
+                <Icon className={cn('mr-3 h-5 w-5 transition-colors', isActive ? 'text-primary-foreground dark:text-[#FFFFFF]' : 'text-muted-foreground dark:text-[#B9BBBE] dark:group-hover:text-[#FFFFFF]')} />
                 {item.title}
               </Link>
             );
@@ -104,15 +105,15 @@ export default function Sidebar() {
         </nav>
 
         {/* User Profile Section */}
-        <div className="p-4 border-t">
+        <div className="p-4 border-t dark:border-[rgba(255,255,255,0.06)]">
           <div className="flex items-center space-x-3">
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium text-gray-900 truncate">
+              <p className="text-sm font-medium text-gray-900 truncate dark:text-[#FFFFFF]">
                 {user.firstName && user.lastName
                   ? `${user.firstName} ${user.lastName}`
                   : user.email}
               </p>
-              <p className="text-xs text-gray-500 truncate">{user.email}</p>
+              <p className="text-xs text-gray-500 truncate dark:text-[#B9BBBE]">{user.email}</p>
             </div>
           </div>
         </div>

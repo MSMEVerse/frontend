@@ -159,10 +159,27 @@
   }
 }
 
-/* Enhanced Discord dark theme for creator section */
+/* ============================================
+   DISCORD DARK MODE THEME - COMPLETE OVERRIDE
+   ============================================ */
+
+/* Force Discord background on HTML and Body */
+.dark html,
+.dark body {
+  background-color: #36393F !important;
+  color: #FFFFFF !important;
+}
+
+/* Force Discord background on all main containers */
+.dark main,
+.dark [class*="container"],
+.dark [class*="Container"] {
+  background-color: #36393F !important;
+}
+
+/* Ensure all text is bright white */
 .dark {
-  /* Ensure all text is bright white */
-  color: #FFFFFF;
+  color: #FFFFFF !important;
 }
 
 .dark h1,
@@ -171,13 +188,24 @@
 .dark h4,
 .dark h5,
 .dark h6 {
-  color: #FFFFFF;
+  color: #FFFFFF !important;
 }
 
 .dark p,
 .dark span,
-.dark div {
-  color: #FFFFFF;
+.dark div,
+.dark label,
+.dark li,
+.dark td,
+.dark th,
+.dark a,
+.dark button,
+.dark small,
+.dark strong,
+.dark em,
+.dark b,
+.dark i {
+  color: #FFFFFF !important;
 }
 
 .dark .text-muted-foreground {
@@ -188,66 +216,237 @@
   color: #FFFFFF !important;
 }
 
-/* Enhanced Discord card styling in dark mode */
-.dark .card,
-.dark [class*="Card"] {
-  background: #2F3136;
-  border-color: rgba(255, 255, 255, 0.06);
+/* Ensure all text elements use white */
+.dark * {
+  color: #FFFFFF !important;
 }
 
-/* Enhanced Discord input styling in dark mode */
+/* Override muted text to be lighter grey */
+.dark .text-muted-foreground,
+.dark [class*="text-muted"],
+.dark [class*="muted"] {
+  color: #B9BBBE !important;
+}
+
+/* ============================================
+   CARDS - Force #2F3136 background
+   ============================================ */
+.dark .card,
+.dark [class*="Card"],
+.dark [data-slot="card"],
+.dark [data-slot="card-header"],
+.dark [data-slot="card-content"],
+.dark [data-slot="card-footer"] {
+  background-color: #2F3136 !important;
+  border-color: rgba(255, 255, 255, 0.06) !important;
+  color: #FFFFFF !important;
+}
+
+/* ============================================
+   TABLES - Discord colors
+   ============================================ */
+.dark table,
+.dark [data-slot="table"] {
+  background-color: #2F3136 !important;
+  color: #FFFFFF !important;
+}
+
+.dark thead,
+.dark [data-slot="table-header"],
+.dark th,
+.dark [data-slot="table-head"] {
+  background-color: #202225 !important;
+  color: #FFFFFF !important;
+  border-color: rgba(255, 255, 255, 0.06) !important;
+}
+
+.dark tbody,
+.dark [data-slot="table-body"],
+.dark td,
+.dark [data-slot="table-cell"] {
+  background-color: #2F3136 !important;
+  color: #FFFFFF !important;
+  border-color: rgba(255, 255, 255, 0.06) !important;
+}
+
+.dark tr,
+.dark [data-slot="table-row"] {
+  border-color: rgba(255, 255, 255, 0.06) !important;
+}
+
+.dark tr:hover,
+.dark [data-slot="table-row"]:hover {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.dark tfoot,
+.dark [data-slot="table-footer"] {
+  background-color: #2F3136 !important;
+  border-color: rgba(255, 255, 255, 0.06) !important;
+}
+
+/* ============================================
+   INPUTS/SELECTS/TEXTAREAS - #202225 background
+   ============================================ */
 .dark input,
 .dark textarea,
-.dark select {
-  background: #202225;
-  border-color: rgba(255, 255, 255, 0.06);
-  color: #FFFFFF;
+.dark select,
+.dark [data-slot="input"],
+.dark [data-slot="textarea"],
+.dark [data-slot="select-trigger"] {
+  background-color: #202225 !important;
+  border-color: rgba(255, 255, 255, 0.06) !important;
+  color: #FFFFFF !important;
+}
+
+/* Text selection in inputs - greyish color instead of blue */
+.dark input::selection,
+.dark textarea::selection,
+.dark input::-moz-selection,
+.dark textarea::-moz-selection {
+  background-color: #2F3136 !important;
+  color: #FFFFFF !important;
+}
+
+/* Override any blue selection colors */
+input::selection,
+textarea::selection,
+input::-moz-selection,
+textarea::-moz-selection {
+  background-color: #2F3136 !important;
+  color: #FFFFFF !important;
 }
 
 .dark input::placeholder,
-.dark textarea::placeholder {
-  color: #B9BBBE;
+.dark textarea::placeholder,
+.dark select::placeholder {
+  color: #B9BBBE !important;
 }
 
-/* Enhanced Discord button styling in dark mode */
+.dark input:focus,
+.dark textarea:focus,
+.dark select:focus {
+  border-color: rgba(255, 255, 255, 0.2) !important;
+  outline-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* ============================================
+   BADGES - Remove white/light backgrounds
+   ============================================ */
+.dark [class*="Badge"],
+.dark [data-slot="badge"] {
+  color: #FFFFFF !important;
+}
+
+/* Remove all light badge backgrounds */
+.dark .bg-green-100,
+.dark .bg-blue-100,
+.dark .bg-yellow-100,
+.dark .bg-red-100,
+.dark .bg-purple-100,
+.dark .bg-pink-100,
+.dark .bg-indigo-100,
+.dark .bg-gray-100,
+.dark .bg-slate-100,
+.dark .bg-zinc-100 {
+  background-color: #2F3136 !important;
+}
+
+/* ============================================
+   MODALS/DIALOGS - #2F3136 background
+   ============================================ */
+.dark [data-slot="dialog-content"],
+.dark [data-slot="dialog-header"],
+.dark [data-slot="dialog-footer"] {
+  background-color: #2F3136 !important;
+  color: #FFFFFF !important;
+  border-color: rgba(255, 255, 255, 0.06) !important;
+}
+
+.dark [data-slot="dialog-overlay"] {
+  background-color: rgba(0, 0, 0, 0.7) !important;
+}
+
+/* ============================================
+   DROPDOWNS/POPOVERS - #2F3136 background
+   ============================================ */
+.dark [data-slot="dropdown-menu-content"],
+.dark [data-slot="dropdown-menu-sub-content"],
+.dark [data-slot="popover-content"],
+.dark [data-slot="select-content"] {
+  background-color: #2F3136 !important;
+  color: #FFFFFF !important;
+  border-color: rgba(255, 255, 255, 0.06) !important;
+}
+
+.dark [data-slot="dropdown-menu-item"]:hover,
+.dark [data-slot="select-item"]:hover {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* ============================================
+   SIDEBAR - #2F3136 background
+   ============================================ */
+.dark aside,
+.dark [class*="sidebar"],
+.dark [class*="Sidebar"] {
+  background-color: #2F3136 !important;
+  border-color: rgba(255, 255, 255, 0.06) !important;
+}
+
+/* ============================================
+   TOP NAV - #2F3136 background
+   ============================================ */
+.dark nav,
+.dark [class*="TopNav"],
+.dark [class*="top-nav"] {
+  background-color: #2F3136 !important;
+  border-color: rgba(255, 255, 255, 0.06) !important;
+}
+
+/* ============================================
+   BUTTONS - Discord styling
+   ============================================ */
 .dark button {
-  color: #FFFFFF;
+  color: #FFFFFF !important;
 }
 
-.dark button[class*="primary"] {
-  background: #5865F2;
-  color: #FFFFFF;
+.dark button[class*="primary"],
+.dark [class*="bg-primary"] {
+  background-color: #5865F2 !important;
+  color: #FFFFFF !important;
 }
 
-.dark button[class*="secondary"] {
-  background: #2F3136;
-  color: #FFFFFF;
+.dark button[class*="primary"]:hover {
+  background-color: #4752C4 !important;
 }
 
-/* Enhanced Discord badge styling */
-.dark [class*="Badge"] {
-  color: #FFFFFF;
+.dark button[class*="secondary"],
+.dark [class*="bg-secondary"] {
+  background-color: #2F3136 !important;
+  color: #FFFFFF !important;
 }
 
-/* Enhanced Discord table styling */
-.dark table {
-  color: #FFFFFF;
+.dark button[class*="secondary"]:hover {
+  background-color: rgba(255, 255, 255, 0.1) !important;
 }
 
-.dark th,
-.dark td {
-  border-color: rgba(255, 255, 255, 0.06);
-  color: #FFFFFF;
-}
-
-/* Override gray backgrounds with Discord colors */
+/* ============================================
+   OVERRIDE ALL GRAY BACKGROUNDS
+   ============================================ */
 .dark .bg-gray-50,
 .dark .bg-gray-100,
+.dark .bg-gray-200,
+.dark .bg-gray-300,
+.dark .bg-gray-400,
+.dark .bg-gray-500,
+.dark .bg-gray-600,
 .dark [class*="bg-gray"] {
   background-color: #2F3136 !important;
 }
 
-.dark .bg-gray-900 {
+.dark .bg-gray-900,
+.dark .bg-gray-950 {
   background-color: #202225 !important;
 }
 
@@ -259,7 +458,16 @@
   background-color: #36393F !important;
 }
 
-/* Ensure text on gray backgrounds uses Discord colors */
+/* Override white backgrounds */
+.dark .bg-white,
+.dark .bg-slate-50,
+.dark .bg-zinc-50 {
+  background-color: #2F3136 !important;
+}
+
+/* ============================================
+   TEXT COLORS
+   ============================================ */
 .dark .text-gray-400,
 .dark .text-gray-500,
 .dark .text-gray-600 {
@@ -272,21 +480,43 @@
   color: #FFFFFF !important;
 }
 
-/* Enhanced Discord link colors */
+/* ============================================
+   LINKS - Discord Blurple
+   ============================================ */
 .dark a {
-  color: #5865F2;
+  color: #5865F2 !important;
 }
 
 .dark a:hover {
-  color: #4752C4;
+  color: #4752C4 !important;
 }
 
-/* Enhanced Discord divider/separator styling */
-.dark hr {
-  border-color: rgba(255, 255, 255, 0.06);
+/* ============================================
+   DIVIDERS/SEPARATORS
+   ============================================ */
+.dark hr,
+.dark [data-slot="separator"] {
+  border-color: rgba(255, 255, 255, 0.06) !important;
 }
 
-/* Enhanced Discord shadow effects for depth */
+/* ============================================
+   SHADOWS - Discord style
+   ============================================ */
 .dark [class*="shadow"] {
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 1px 2px 0 rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 1px 2px 0 rgba(0, 0, 0, 0.1) !important;
+}
+
+/* ============================================
+   MUTED BACKGROUNDS
+   ============================================ */
+.dark .bg-muted {
+  background-color: #202225 !important;
+}
+
+.dark .bg-accent {
+  background-color: #2F3136 !important;
+}
+
+.dark .bg-accent:hover {
+  background-color: rgba(255, 255, 255, 0.1) !important;
 }
