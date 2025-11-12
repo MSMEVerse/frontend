@@ -3,16 +3,17 @@
 import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
-import MSMEProfilePage from '@/components/pages/MSMEProfilePage';
-import CreatorProfilePage from '@/components/pages/CreatorProfilePage';
+import ChatWithBrands from '@/components/creator/ChatWithBrands';
 
-export default function ProfilePage() {
+export default function ChatBrandsPage() {
   const { user, loading } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
     if (!loading && !user) {
       router.push('/login');
+    } else if (!loading && user && user.role !== 'CREATOR') {
+      router.push('/dashboard');
     }
   }, [user, loading, router]);
 
@@ -24,23 +25,10 @@ export default function ProfilePage() {
     );
   }
 
-  if (!user) {
+  if (!user || user.role !== 'CREATOR') {
     return null;
   }
 
-  // Render role-specific profile page
-  switch (user.role) {
-    case 'MSME':
-      return <MSMEProfilePage />;
-    case 'CREATOR':
-      return <CreatorProfilePage />;
-    default:
-      return (
-        <div className="text-center py-12">
-          <p>Profile is only available for MSMEs and Creators</p>
-        </div>
-      );
-  }
+  return <ChatWithBrands />;
 }
-
 

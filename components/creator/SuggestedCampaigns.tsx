@@ -20,7 +20,7 @@ export default function SuggestedCampaigns({ campaigns = [] }: SuggestedCampaign
       <CardContent>
         {campaigns.length === 0 ? (
           <div className="text-center py-8 text-muted-foreground">
-            <Briefcase className="h-12 w-12 mx-auto mb-4 text-gray-400" />
+            <Briefcase className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
             <p>No suggested campaigns at the moment</p>
             <Button asChild variant="outline" className="mt-4">
               <Link href="/campaigns">Browse All Campaigns</Link>
@@ -31,7 +31,7 @@ export default function SuggestedCampaigns({ campaigns = [] }: SuggestedCampaign
             {campaigns.slice(0, 3).map((campaign) => (
               <div
                 key={campaign.id}
-                className="flex items-start justify-between p-4 border rounded-lg hover:bg-gray-50 transition-colors"
+                className="flex items-start justify-between p-4 border rounded-lg hover:bg-muted/50 transition-colors"
               >
                 <div className="flex-1">
                   <div className="flex items-center space-x-2 mb-2">
@@ -44,11 +44,11 @@ export default function SuggestedCampaigns({ campaigns = [] }: SuggestedCampaign
                   <div className="flex items-center space-x-4 text-xs text-muted-foreground">
                     <span className="flex items-center">
                       <DollarSign className="h-3 w-3 mr-1" />
-                      ₹{campaign.budget.toLocaleString()}
+                      Offer: ₹{campaign.budgetPerCreator.toLocaleString()}
                     </span>
                     <span className="flex items-center">
                       <Calendar className="h-3 w-3 mr-1" />
-                      {format(new Date(campaign.deadline), 'MMM dd, yyyy')}
+                      {format(new Date(campaign.endDate), 'MMM dd, yyyy')}
                     </span>
                   </div>
                 </div>
@@ -66,4 +66,5 @@ export default function SuggestedCampaigns({ campaigns = [] }: SuggestedCampaign
     </Card>
   );
 }
+
 

@@ -17,11 +17,25 @@ import { useRouter } from 'next/navigation';
 const campaignSchema = z.object({
   title: z.string().min(3, 'Title must be at least 3 characters'),
   objective: z.string().min(10, 'Objective must be at least 10 characters'),
-  budget: z.number().min(1000, 'Budget must be at least ₹1,000'),
+  totalBudget: z.number().min(1000, 'Total budget must be at least ₹1,000'),
+  budgetPerCreator: z.number().min(100, 'Budget per creator must be at least ₹100'),
   type: z.enum(['PAID', 'BARTER']),
   deliverables: z.array(z.string()).min(1, 'At least one deliverable is required'),
-  deadline: z.string().min(1, 'Deadline is required'),
-  creatorId: z.string().optional(),
+  startDate: z.string().min(1, 'Start date is required'),
+  endDate: z.string().min(1, 'End date is required'),
+}).refine((data) => {
+  if (data.startDate && data.endDate) {
+    return new Date(data.endDate) > new Date(data.startDate);
+  }
+  return true;
+}, {
+  message: 'End date must be after start date',
+  path: ['endDate'],
+}).refine((data) => {
+  return data.totalBudget >= data.budgetPerCreator;
+}, {
+  message: 'Total budget must be greater than or equal to budget per creator',
+  path: ['totalBudget'],
 });
 
 type CampaignFormValues = z.infer<typeof campaignSchema>;
@@ -46,6 +60,13 @@ export default function CampaignForm() {
   });
 
   const type = watch('type');
+  const totalBudget = watch('totalBudget');
+  const budgetPerCreator = watch('budgetPerCreator');
+  
+  // Calculate creators count
+  const creatorsCount = totalBudget && budgetPerCreator && budgetPerCreator > 0
+    ? Math.floor(totalBudget / budgetPerCreator)
+    : 0;
 
   const addDeliverable = () => {
     if (deliverableInput.trim()) {
@@ -64,8 +85,19 @@ export default function CampaignForm() {
 
   const onSubmit = async (data: CampaignFormValues) => {
     try {
+      // Calculate creatorsCount
+      const creatorsCount = Math.floor(data.totalBudget / data.budgetPerCreator);
+      
+      // Prepare campaign data
+      const campaignData = {
+        ...data,
+        creatorsCount,
+        selectedCreators: [],
+        status: 'OPEN' as const,
+      };
+      
       // TODO: Call API to create campaign
-      console.log('Campaign data:', data);
+      console.log('Campaign data:', campaignData);
       toast.success('Campaign created successfully');
       router.push('/campaigns');
     } catch (error) {
@@ -78,6 +110,11 @@ export default function CampaignForm() {
       <CardHeader>
         <CardTitle>Create Campaign</CardTitle>
         <CardDescription>Fill in the details to create a new campaign</CardDescription>
+        <div className="mt-2 p-3 bg-blue-50 dark:bg-blue-950 border border-blue-200 dark:border-blue-800 rounded-md">
+          <p className="text-sm text-blue-800 dark:text-blue-200">
+            <strong>Note:</strong> Our platform does not charge any commission or fees on deals. All transactions are between you and the creators directly.
+          </p>
+        </div>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
@@ -110,19 +147,33 @@ export default function CampaignForm() {
 
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="budget">Budget (₹) *</Label>
+              <Label htmlFor="startDate">Start Date *</Label>
               <Input
-                id="budget"
-                type="number"
-                {...register('budget', { valueAsNumber: true })}
-                placeholder="50000"
-                className={errors.budget ? 'border-red-500' : ''}
+                id="startDate"
+                type="date"
+                {...register('startDate')}
+                className={errors.startDate ? 'border-red-500' : ''}
               />
-              {errors.budget && (
-                <p className="text-sm text-red-500">{errors.budget.message}</p>
+              {errors.startDate && (
+                <p className="text-sm text-red-500">{errors.startDate.message}</p>
               )}
             </div>
 
+            <div className="space-y-2">
+              <Label htmlFor="endDate">End Date *</Label>
+              <Input
+                id="endDate"
+                type="date"
+                {...register('endDate')}
+                className={errors.endDate ? 'border-red-500' : ''}
+              />
+              {errors.endDate && (
+                <p className="text-sm text-red-500">{errors.endDate.message}</p>
+              )}
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label htmlFor="type">Campaign Type *</Label>
               <Select
@@ -140,18 +191,49 @@ export default function CampaignForm() {
             </div>
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="deadline">Deadline *</Label>
-            <Input
-              id="deadline"
-              type="date"
-              {...register('deadline')}
-              className={errors.deadline ? 'border-red-500' : ''}
-            />
-            {errors.deadline && (
-              <p className="text-sm text-red-500">{errors.deadline.message}</p>
-            )}
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="totalBudget">Total Budget (₹) *</Label>
+              <Input
+                id="totalBudget"
+                type="number"
+                {...register('totalBudget', { valueAsNumber: true })}
+                placeholder="100000"
+                className={errors.totalBudget ? 'border-red-500' : ''}
+              />
+              {errors.totalBudget && (
+                <p className="text-sm text-red-500">{errors.totalBudget.message}</p>
+              )}
+              <p className="text-xs text-muted-foreground">Total amount allocated for this campaign</p>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="budgetPerCreator">Budget per Creator (₹) *</Label>
+              <Input
+                id="budgetPerCreator"
+                type="number"
+                {...register('budgetPerCreator', { valueAsNumber: true })}
+                placeholder="5000"
+                className={errors.budgetPerCreator ? 'border-red-500' : ''}
+              />
+              {errors.budgetPerCreator && (
+                <p className="text-sm text-red-500">{errors.budgetPerCreator.message}</p>
+              )}
+              <p className="text-xs text-muted-foreground">Amount offered to each creator</p>
+            </div>
           </div>
+
+          {creatorsCount > 0 && (
+            <div className="p-4 bg-muted rounded-lg">
+              <div className="flex items-center justify-between">
+                <span className="text-sm font-medium">Number of Creators:</span>
+                <span className="text-lg font-bold text-primary">{creatorsCount}</span>
+              </div>
+              <p className="text-xs text-muted-foreground mt-1">
+                Based on total budget ÷ budget per creator
+              </p>
+            </div>
+          )}
 
           <div className="space-y-2">
             <Label>Deliverables *</Label>

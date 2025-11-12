@@ -9,7 +9,7 @@ import { CreatorFilters } from '@/lib/types';
 import { mockUsers, mockCreatorProfiles } from '@/lib/mocks';
 import { User, CreatorProfile } from '@/lib/types';
 
-export default function MarketplacePage() {
+export default function MSMEMarketplacePage() {
   const [filters, setFilters] = useState<CreatorFilters>({});
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCreator, setSelectedCreator] = useState<(User & { profile: CreatorProfile }) | null>(null);

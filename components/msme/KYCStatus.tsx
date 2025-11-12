@@ -110,3 +110,4 @@ export default function KYCStatus({ status, progress = 0 }: KYCStatusProps) {
   );
 }
 
+

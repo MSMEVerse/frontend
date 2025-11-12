@@ -2,75 +2,65 @@
 
 import { useState } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { format } from 'date-fns';
-import Link from 'next/link';
-import { Briefcase, Calendar, DollarSign, Eye } from 'lucide-react';
+import { Briefcase } from 'lucide-react';
 import { mockCampaigns } from '@/lib/mocks';
 import type { Campaign } from '@/lib/types';
+import CampaignCard from '@/components/creator/CampaignCard';
+import CampaignDetailsModal from '@/components/creator/CampaignDetailsModal';
+import { useAuth } from '@/contexts/AuthContext';
 
 export default function CreatorCampaigns() {
-  const [selectedTab, setSelectedTab] = useState<'open' | 'ongoing' | 'completed'>('open');
+  const [selectedTab, setSelectedTab] = useState<'ongoing' | 'past' | 'applied'>('ongoing');
+  const [selectedCampaign, setSelectedCampaign] = useState<Campaign | null>(null);
+  const [detailsModalOpen, setDetailsModalOpen] = useState(false);
+  const { user } = useAuth();
 
-  // Mock data
-  const openCampaigns = mockCampaigns.filter((c) => c.status === 'PENDING');
-  const ongoingCampaigns = mockCampaigns.filter(
-    (c) => c.status === 'ONGOING' || c.status === 'PENDING_REVIEW'
-  );
-  const completedCampaigns = mockCampaigns.filter(
-    (c) => c.status === 'COMPLETED' || c.status === 'RELEASED'
-  );
+  // Check if creator has applied to a campaign
+  const hasApplied = (campaignId: string) => {
+    const campaign = mockCampaigns.find((c) => c.id === campaignId);
+    if (!campaign || !campaign.applications || !user) return false;
+    return campaign.applications.some((app) => app.creatorId === user.id);
+  };
 
-  const CampaignCard = ({ campaign }: { campaign: Campaign }) => (
-    <Card className="hover:shadow-lg transition-shadow">
-      <CardContent className="pt-6">
-        <div className="flex items-start justify-between mb-4">
-          <div className="flex-1">
-            <div className="flex items-center space-x-2 mb-2">
-              <h3 className="font-semibold text-lg">{campaign.title}</h3>
-              <Badge>{campaign.type}</Badge>
-            </div>
-            <p className="text-sm text-muted-foreground mb-2">
-              {campaign.msme?.profile?.companyName || 'MSME'}
-            </p>
-            <p className="text-sm text-muted-foreground mb-4">
-              {campaign.objective}
-            </p>
-            <div className="space-y-2 text-sm">
-              <div className="flex items-center space-x-4">
-                <span className="flex items-center text-muted-foreground">
-                  <DollarSign className="h-4 w-4 mr-1" />
-                  ₹{campaign.budget.toLocaleString()}
-                </span>
-                <span className="flex items-center text-muted-foreground">
-                  <Calendar className="h-4 w-4 mr-1" />
-                  {format(new Date(campaign.deadline), 'MMM dd, yyyy')}
-                </span>
-              </div>
-              <div className="text-muted-foreground">
-                Deliverables: {campaign.deliverables.length} items
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="flex space-x-2">
-          <Button variant="outline" size="sm" className="flex-1" asChild>
-            <Link href={`/campaigns/${campaign.id}`}>
-              <Eye className="h-4 w-4 mr-2" />
-              View Details
-            </Link>
-          </Button>
-          {selectedTab === 'open' && (
-            <Button size="sm" className="flex-1">
-              Apply
-            </Button>
-          )}
-        </div>
-      </CardContent>
-    </Card>
-  );
+  const getApplicationStatus = (campaignId: string): 'PENDING' | 'APPROVED' | 'REJECTED' | undefined => {
+    const campaign = mockCampaigns.find((c) => c.id === campaignId);
+    if (!campaign || !campaign.applications || !user) return undefined;
+    const application = campaign.applications.find((app) => app.creatorId === user.id);
+    return application?.status;
+  };
+
+  // Check if creator is selected/approved for a campaign
+  const isSelected = (campaign: Campaign) => {
+    if (!user || !campaign.selectedCreators) return false;
+    return campaign.selectedCreators.includes(user.id);
+  };
+
+  // Ongoing campaigns: campaigns where creator is selected and status is ONGOING or PENDING_REVIEW
+  const ongoingCampaigns = mockCampaigns.filter((c) => {
+    if (!isSelected(c)) return false;
+    return c.status === 'ONGOING' || c.status === 'PENDING_REVIEW';
+  });
+
+  // Past campaigns: campaigns that are COMPLETED/CLOSED/RELEASED where creator was selected
+  const pastCampaigns = mockCampaigns.filter((c) => {
+    if (!isSelected(c)) return false;
+    return c.status === 'COMPLETED' || c.status === 'RELEASED' || c.status === 'CLOSED';
+  });
+
+  // Applied campaigns: campaigns where creator has applied (regardless of status)
+  const appliedCampaigns = mockCampaigns.filter((c) => {
+    return hasApplied(c.id);
+  });
+
+  const handleViewDetails = (campaign: Campaign) => {
+    setSelectedCampaign(campaign);
+    setDetailsModalOpen(true);
+  };
+
+  const handleApply = (campaignId: string) => {
+    // This will be handled by the modal
+    console.log('Apply to campaign:', campaignId);
+  };
 
   return (
     <div className="space-y-6">
@@ -83,55 +73,91 @@ export default function CreatorCampaigns() {
 
       <Tabs value={selectedTab} onValueChange={(v) => setSelectedTab(v as any)}>
         <TabsList>
-          <TabsTrigger value="open">Open Opportunities</TabsTrigger>
           <TabsTrigger value="ongoing">Ongoing</TabsTrigger>
-          <TabsTrigger value="completed">Completed</TabsTrigger>
+          <TabsTrigger value="past">Past Campaigns</TabsTrigger>
+          <TabsTrigger value="applied">Applied</TabsTrigger>
         </TabsList>
-
-        <TabsContent value="open" className="space-y-4">
-          {openCampaigns.length === 0 ? (
-            <div className="text-center py-12 text-muted-foreground">
-              <Briefcase className="h-12 w-12 mx-auto mb-4 text-gray-400" />
-              <p>No open campaigns at the moment</p>
-            </div>
-          ) : (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {openCampaigns.map((campaign) => (
-                <CampaignCard key={campaign.id} campaign={campaign} />
-              ))}
-            </div>
-          )}
-        </TabsContent>
 
         <TabsContent value="ongoing" className="space-y-4">
           {ongoingCampaigns.length === 0 ? (
             <div className="text-center py-12 text-muted-foreground">
+              <Briefcase className="h-12 w-12 mx-auto mb-4 text-gray-400" />
               <p>No ongoing campaigns</p>
+              <p className="text-sm mt-2">Campaigns you're currently working on will appear here</p>
             </div>
           ) : (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
               {ongoingCampaigns.map((campaign) => (
-                <CampaignCard key={campaign.id} campaign={campaign} />
+                <CampaignCard
+                  key={campaign.id}
+                  campaign={campaign}
+                  hasApplied={hasApplied(campaign.id)}
+                  applicationStatus={getApplicationStatus(campaign.id)}
+                  onViewDetails={() => handleViewDetails(campaign)}
+                />
               ))}
             </div>
           )}
         </TabsContent>
 
-        <TabsContent value="completed" className="space-y-4">
-          {completedCampaigns.length === 0 ? (
+        <TabsContent value="past" className="space-y-4">
+          {pastCampaigns.length === 0 ? (
             <div className="text-center py-12 text-muted-foreground">
-              <p>No completed campaigns</p>
+              <Briefcase className="h-12 w-12 mx-auto mb-4 text-gray-400" />
+              <p>No past campaigns</p>
+              <p className="text-sm mt-2">Completed campaigns will appear here</p>
             </div>
           ) : (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {completedCampaigns.map((campaign) => (
-                <CampaignCard key={campaign.id} campaign={campaign} />
+              {pastCampaigns.map((campaign) => (
+                <CampaignCard
+                  key={campaign.id}
+                  campaign={campaign}
+                  hasApplied={hasApplied(campaign.id)}
+                  applicationStatus={getApplicationStatus(campaign.id)}
+                  onViewDetails={() => handleViewDetails(campaign)}
+                />
+              ))}
+            </div>
+          )}
+        </TabsContent>
+
+        <TabsContent value="applied" className="space-y-4">
+          {appliedCampaigns.length === 0 ? (
+            <div className="text-center py-12 text-muted-foreground">
+              <Briefcase className="h-12 w-12 mx-auto mb-4 text-gray-400" />
+              <p>No applications yet</p>
+              <p className="text-sm mt-2">Campaigns you've applied to will appear here</p>
+            </div>
+          ) : (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {appliedCampaigns.map((campaign) => (
+                <CampaignCard
+                  key={campaign.id}
+                  campaign={campaign}
+                  hasApplied={hasApplied(campaign.id)}
+                  applicationStatus={getApplicationStatus(campaign.id)}
+                  onViewDetails={() => handleViewDetails(campaign)}
+                  onApply={() => handleViewDetails(campaign)}
+                />
               ))}
             </div>
           )}
         </TabsContent>
       </Tabs>
+
+      {selectedCampaign && (
+        <CampaignDetailsModal
+          campaign={selectedCampaign}
+          open={detailsModalOpen}
+          onOpenChange={setDetailsModalOpen}
+          onApply={handleApply}
+          hasApplied={hasApplied(selectedCampaign.id)}
+          applicationStatus={getApplicationStatus(selectedCampaign.id)}
+        />
+      )}
     </div>
   );
 }
+
 

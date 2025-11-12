@@ -115,7 +115,7 @@ export default function CreatorPortfolioPage() {
             />
           </div>
 
-          <div className="p-4 bg-blue-50 rounded-lg">
+          <div className="p-4 bg-muted/50 rounded-lg">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium">Followers: 50,000</p>
@@ -163,4 +163,5 @@ export default function CreatorPortfolioPage() {
     </div>
   );
 }
+
 

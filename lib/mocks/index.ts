@@ -1,4 +1,4 @@
-import { User, Campaign, Transaction, Message, Notification, CreatorProfile, MSMEProfile } from '../types';
+import { User, Campaign, Transaction, Message, Notification, CreatorProfile, MSMEProfile, CampaignApplication, Conversation } from '../types';
 
 // Mock Users
 export const mockUsers: User[] = [
@@ -29,6 +29,42 @@ export const mockUsers: User[] = [
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
   },
+  {
+    id: '4',
+    email: 'fashion@example.com',
+    role: 'MSME',
+    firstName: 'Priya',
+    lastName: 'Sharma',
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  },
+  {
+    id: '5',
+    email: 'foodie@example.com',
+    role: 'MSME',
+    firstName: 'Raj',
+    lastName: 'Kumar',
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  },
+  {
+    id: '6',
+    email: 'beauty@example.com',
+    role: 'MSME',
+    firstName: 'Anita',
+    lastName: 'Patel',
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  },
+  {
+    id: '7',
+    email: 'fitness@example.com',
+    role: 'MSME',
+    firstName: 'Vikram',
+    lastName: 'Singh',
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  },
 ];
 
 // Mock MSME Profiles
@@ -38,11 +74,55 @@ export const mockMSMEProfiles: MSMEProfile[] = [
     userId: '1',
     companyName: 'Tech Solutions Inc',
     tagline: 'Innovative Tech Solutions',
-    description: 'We provide cutting-edge technology solutions',
+    description: 'We provide cutting-edge technology solutions for businesses of all sizes',
     kycStatus: 'VERIFIED',
     verified: true,
     city: 'Mumbai',
     categories: ['Technology', 'Software'],
+  },
+  {
+    id: '2',
+    userId: '4',
+    companyName: 'Fashion Forward',
+    tagline: 'Trendy Fashion for Everyone',
+    description: 'A leading fashion brand offering trendy and affordable clothing',
+    kycStatus: 'VERIFIED',
+    verified: true,
+    city: 'Delhi',
+    categories: ['Fashion', 'Lifestyle'],
+  },
+  {
+    id: '3',
+    userId: '5',
+    companyName: 'Foodie Delights',
+    tagline: 'Delicious Food, Delivered Fresh',
+    description: 'Premium food delivery service specializing in healthy and delicious meals',
+    kycStatus: 'VERIFIED',
+    verified: true,
+    city: 'Bangalore',
+    categories: ['Food & Beverage', 'Lifestyle'],
+  },
+  {
+    id: '4',
+    userId: '6',
+    companyName: 'Beauty Essentials',
+    tagline: 'Your Beauty, Our Priority',
+    description: 'Premium beauty and skincare products for all skin types',
+    kycStatus: 'VERIFIED',
+    verified: true,
+    city: 'Pune',
+    categories: ['Beauty', 'Lifestyle'],
+  },
+  {
+    id: '5',
+    userId: '7',
+    companyName: 'FitLife Gym',
+    tagline: 'Transform Your Body, Transform Your Life',
+    description: 'State-of-the-art fitness center with expert trainers and modern equipment',
+    kycStatus: 'PENDING',
+    verified: false,
+    city: 'Hyderabad',
+    categories: ['Fitness', 'Lifestyle'],
   },
 ];
 
@@ -136,6 +216,34 @@ export const mockCreatorProfiles: CreatorProfile[] = [
   },
 ];
 
+// Mock Campaign Applications
+export const mockCampaignApplications: CampaignApplication[] = [
+  {
+    id: '1',
+    campaignId: '2',
+    creatorId: '2',
+    proposal: 'I have extensive experience in tech product reviews and have worked with several tech brands. My audience is highly engaged with technology content, and I can create authentic, informative content that will resonate with your target audience. I propose creating 3 detailed Instagram posts with high-quality visuals and 1 comprehensive YouTube video review.',
+    status: 'PENDING',
+    createdAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
+    creator: {
+      ...mockUsers[1],
+      profile: mockCreatorProfiles[0],
+    },
+  },
+  {
+    id: '2',
+    campaignId: '2',
+    creatorId: '3',
+    proposal: 'As a fashion and lifestyle influencer, I can bring a unique perspective to your product launch. My audience trusts my recommendations, and I have a proven track record of driving engagement and conversions. I will create visually stunning content that showcases your product in real-life scenarios.',
+    status: 'PENDING',
+    createdAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
+    creator: {
+      ...mockUsers[2],
+      profile: mockCreatorProfiles[1],
+    },
+  },
+];
+
 // Mock Campaigns
 export const mockCampaigns: Campaign[] = [
   {
@@ -143,14 +251,94 @@ export const mockCampaigns: Campaign[] = [
     msmeId: '1',
     creatorId: '2',
     title: 'Product Launch Campaign',
-    objective: 'Increase brand awareness',
-    budget: 50000,
+    objective: 'Increase brand awareness for our new tech product',
+    budget: 50000, // Deprecated
     status: 'ONGOING',
     type: 'PAID',
     deliverables: ['3 Instagram posts', '1 YouTube video', '5 Stories'],
-    deadline: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(),
-    createdAt: new Date().toISOString(),
+    deadline: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(), // Deprecated
+    startDate: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000).toISOString(),
+    endDate: new Date(Date.now() + 20 * 24 * 60 * 60 * 1000).toISOString(),
+    totalBudget: 100000,
+    budgetPerCreator: 5000,
+    creatorsCount: 20,
+    selectedCreators: ['2'],
+    applications: [],
+    createdAt: new Date(Date.now() - 15 * 24 * 60 * 60 * 1000).toISOString(),
     updatedAt: new Date().toISOString(),
+    msme: {
+      ...mockUsers[0],
+      profile: mockMSMEProfiles[0],
+    },
+  },
+  {
+    id: '2',
+    msmeId: '1',
+    title: 'Summer Collection Launch',
+    objective: 'Promote our new summer fashion collection to a wider audience',
+    budget: 75000, // Deprecated
+    status: 'OPEN',
+    type: 'PAID',
+    deliverables: ['5 Instagram posts', '10 Stories', '1 Reel'],
+    startDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(),
+    endDate: new Date(Date.now() + 45 * 24 * 60 * 60 * 1000).toISOString(),
+    totalBudget: 100000,
+    budgetPerCreator: 5000,
+    creatorsCount: 20,
+    selectedCreators: [],
+    applications: mockCampaignApplications.filter(app => app.campaignId === '2'),
+    createdAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
+    updatedAt: new Date().toISOString(),
+    msme: {
+      ...mockUsers[0],
+      profile: mockMSMEProfiles[0],
+    },
+  },
+  {
+    id: '3',
+    msmeId: '1',
+    title: 'Tech Review Campaign',
+    objective: 'Get authentic reviews for our latest smartphone',
+    budget: 60000, // Deprecated
+    status: 'OPEN',
+    type: 'PAID',
+    deliverables: ['3 Instagram posts', '1 YouTube unboxing video', '1 detailed review video'],
+    startDate: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toISOString(),
+    endDate: new Date(Date.now() + 60 * 24 * 60 * 60 * 1000).toISOString(),
+    totalBudget: 150000,
+    budgetPerCreator: 7500,
+    creatorsCount: 20,
+    selectedCreators: [],
+    applications: [],
+    createdAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
+    updatedAt: new Date().toISOString(),
+    msme: {
+      ...mockUsers[0],
+      profile: mockMSMEProfiles[0],
+    },
+  },
+  {
+    id: '4',
+    msmeId: '1',
+    title: 'Brand Awareness Campaign',
+    objective: 'Increase brand visibility and reach new audiences',
+    budget: 80000, // Deprecated
+    status: 'OPEN',
+    type: 'BARTER',
+    deliverables: ['Product unboxing', '3 Instagram posts', '1 collaboration post'],
+    startDate: new Date(Date.now() + 10 * 24 * 60 * 60 * 1000).toISOString(),
+    endDate: new Date(Date.now() + 50 * 24 * 60 * 60 * 1000).toISOString(),
+    totalBudget: 0, // Barter campaign
+    budgetPerCreator: 0, // Barter campaign
+    creatorsCount: 15,
+    selectedCreators: [],
+    applications: [],
+    createdAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
+    updatedAt: new Date().toISOString(),
+    msme: {
+      ...mockUsers[0],
+      profile: mockMSMEProfiles[0],
+    },
   },
 ];
 
@@ -177,6 +365,99 @@ export const mockMessages: Message[] = [
     content: 'Hello, when can we schedule the content delivery?',
     read: false,
     createdAt: new Date().toISOString(),
+  },
+];
+
+// Mock Conversations
+export const mockConversations: Conversation[] = [
+  {
+    id: 'conv-1',
+    creatorId: '2',
+    brandId: '1',
+    lastMessage: {
+      id: 'msg-1',
+      conversationId: 'conv-1',
+      senderId: '2',
+      receiverId: '1',
+      content: 'Hi! I\'m interested in collaborating with your brand. I have experience in tech content creation.',
+      read: false,
+      isInitialMessage: true,
+      createdAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
+    },
+    lastMessageAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
+    unreadCount: 0,
+    canCreatorReply: false, // Brand hasn't replied yet
+    createdAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
+    updatedAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
+    brand: {
+      ...mockUsers[0],
+      profile: mockMSMEProfiles[0],
+    },
+  },
+  {
+    id: 'conv-2',
+    creatorId: '2',
+    brandId: '4',
+    lastMessage: {
+      id: 'msg-2',
+      conversationId: 'conv-2',
+      senderId: '4',
+      receiverId: '2',
+      content: 'Thanks for reaching out! We\'d love to work with you. Let\'s discuss the details.',
+      read: false,
+      createdAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
+    },
+    lastMessageAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
+    unreadCount: 0,
+    canCreatorReply: true, // Brand has replied
+    createdAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
+    updatedAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
+    brand: {
+      ...mockUsers.find(u => u.id === '4') || mockUsers[0],
+      profile: mockMSMEProfiles[1],
+    },
+  },
+];
+
+// Mock Direct Messages (non-campaign messages)
+export const mockDirectMessages: Message[] = [
+  {
+    id: 'msg-1',
+    conversationId: 'conv-1',
+    senderId: '2',
+    receiverId: '1',
+    content: 'Hi! I\'m interested in collaborating with your brand. I have experience in tech content creation.',
+    read: false,
+    isInitialMessage: true,
+    createdAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
+  },
+  {
+    id: 'msg-2',
+    conversationId: 'conv-2',
+    senderId: '2',
+    receiverId: '4',
+    content: 'Hello! I love your fashion brand and would like to collaborate on some content.',
+    read: true,
+    isInitialMessage: true,
+    createdAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
+  },
+  {
+    id: 'msg-3',
+    conversationId: 'conv-2',
+    senderId: '4',
+    receiverId: '2',
+    content: 'Thanks for reaching out! We\'d love to work with you. Let\'s discuss the details.',
+    read: false,
+    createdAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
+  },
+  {
+    id: 'msg-4',
+    conversationId: 'conv-2',
+    senderId: '2',
+    receiverId: '4',
+    content: 'Great! I can create 3 Instagram posts and 1 Reel showcasing your latest collection. What\'s your budget range?',
+    read: true,
+    createdAt: new Date(Date.now() - 12 * 60 * 60 * 1000).toISOString(),
   },
 ];
 

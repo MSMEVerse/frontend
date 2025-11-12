@@ -58,9 +58,9 @@ export default function RecentCampaigns({ campaigns = [] }: RecentCampaignsProps
                     {campaign.objective}
                   </p>
                   <div className="flex items-center space-x-4 text-xs text-muted-foreground">
-                    <span>Budget: ₹{campaign.budget.toLocaleString()}</span>
+                    <span>Budget: ₹{campaign.totalBudget.toLocaleString()}</span>
                     <span>
-                      Deadline: {format(new Date(campaign.deadline), 'MMM dd, yyyy')}
+                      End Date: {format(new Date(campaign.endDate), 'MMM dd, yyyy')}
                     </span>
                   </div>
                 </div>
@@ -82,4 +82,5 @@ export default function RecentCampaigns({ campaigns = [] }: RecentCampaignsProps
     </Card>
   );
 }
+
 

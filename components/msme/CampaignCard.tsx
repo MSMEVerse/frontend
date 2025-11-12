@@ -4,7 +4,7 @@ import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Campaign, CampaignStatus } from '@/lib/types';
 import { format } from 'date-fns';
-import { Eye, MessageCircle, Calendar } from 'lucide-react';
+import { Eye, MessageCircle, Calendar, DollarSign, Users, FileText } from 'lucide-react';
 import Link from 'next/link';
 
 interface CampaignCardProps {
@@ -14,10 +14,14 @@ interface CampaignCardProps {
 export default function CampaignCard({ campaign }: CampaignCardProps) {
   const getStatusColor = (status: CampaignStatus) => {
     switch (status) {
+      case 'OPEN':
+        return 'bg-green-100 text-green-800';
       case 'ONGOING':
         return 'bg-blue-100 text-blue-800';
       case 'COMPLETED':
         return 'bg-green-100 text-green-800';
+      case 'CLOSED':
+        return 'bg-gray-100 text-gray-800';
       case 'PENDING':
         return 'bg-yellow-100 text-yellow-800';
       case 'DRAFT':
@@ -28,6 +32,10 @@ export default function CampaignCard({ campaign }: CampaignCardProps) {
         return 'bg-gray-100 text-gray-800';
     }
   };
+
+  const applicationsCount = campaign.applications?.length || 0;
+  const selectedCount = campaign.selectedCreators?.length || 0;
+  const slotsFilled = `${selectedCount}/${campaign.creatorsCount}`;
 
   return (
     <Card className="hover:shadow-lg transition-shadow">
@@ -67,16 +75,37 @@ export default function CampaignCard({ campaign }: CampaignCardProps) {
 
         <div className="space-y-2 text-sm">
           <div className="flex items-center justify-between">
-            <span className="text-muted-foreground">Budget</span>
-            <span className="font-semibold">₹{campaign.budget.toLocaleString()}</span>
+            <span className="text-muted-foreground flex items-center">
+              <Calendar className="h-4 w-4 mr-1" />
+              Duration
+            </span>
+            <span>
+              {format(new Date(campaign.startDate), 'MMM dd')} - {format(new Date(campaign.endDate), 'MMM dd, yyyy')}
+            </span>
           </div>
           <div className="flex items-center justify-between">
             <span className="text-muted-foreground flex items-center">
-              <Calendar className="h-4 w-4 mr-1" />
-              Deadline
+              <DollarSign className="h-4 w-4 mr-1" />
+              Total Budget
             </span>
-            <span>{format(new Date(campaign.deadline), 'MMM dd, yyyy')}</span>
+            <span className="font-semibold">₹{campaign.totalBudget.toLocaleString()}</span>
           </div>
+          <div className="flex items-center justify-between">
+            <span className="text-muted-foreground flex items-center">
+              <Users className="h-4 w-4 mr-1" />
+              Creators
+            </span>
+            <span>{slotsFilled} selected</span>
+          </div>
+          {campaign.status === 'OPEN' && (
+            <div className="flex items-center justify-between">
+              <span className="text-muted-foreground flex items-center">
+                <FileText className="h-4 w-4 mr-1" />
+                Applications
+              </span>
+              <span className="font-semibold">{applicationsCount}</span>
+            </div>
+          )}
           <div className="flex items-center justify-between">
             <span className="text-muted-foreground">Deliverables</span>
             <span>{campaign.deliverables.length} items</span>
@@ -100,4 +129,5 @@ export default function CampaignCard({ campaign }: CampaignCardProps) {
     </Card>
   );
 }
+
 

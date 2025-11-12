@@ -30,12 +30,12 @@ export default function OngoingCampaigns({ campaigns = [] }: OngoingCampaignsPro
             {campaigns.map((campaign) => (
               <div
                 key={campaign.id}
-                className="flex items-start justify-between p-4 border rounded-lg hover:bg-gray-50 transition-colors"
+                className="flex items-start justify-between p-4 border rounded-lg hover:bg-muted/50 transition-colors"
               >
                 <div className="flex-1">
                   <div className="flex items-center space-x-2 mb-2">
                     <h3 className="font-semibold">{campaign.title}</h3>
-                    <Badge className="bg-blue-100 text-blue-800">
+                    <Badge variant="secondary">
                       {campaign.status}
                     </Badge>
                   </div>
@@ -43,7 +43,7 @@ export default function OngoingCampaigns({ campaigns = [] }: OngoingCampaignsPro
                     {campaign.msme?.profile?.companyName || 'MSME'}
                   </p>
                   <div className="flex items-center space-x-4 text-xs text-muted-foreground">
-                    <span>Deadline: {format(new Date(campaign.deadline), 'MMM dd, yyyy')}</span>
+                    <span>End Date: {format(new Date(campaign.endDate), 'MMM dd, yyyy')}</span>
                     <span>Deliverables: {campaign.deliverables.length}</span>
                   </div>
                 </div>
@@ -69,4 +69,5 @@ export default function OngoingCampaigns({ campaigns = [] }: OngoingCampaignsPro
     </Card>
   );
 }
+
 

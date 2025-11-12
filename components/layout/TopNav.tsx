@@ -65,8 +65,8 @@ export default function TopNav() {
         <div className="flex items-center space-x-4">
           {/* Wallet Balance */}
           {user && (
-            <div className="hidden lg:flex items-center space-x-2 px-3 py-2 bg-gray-100 rounded-md">
-              <Wallet className="h-4 w-4 text-gray-600" />
+            <div className="hidden lg:flex items-center space-x-2 px-3 py-2 bg-muted rounded-md">
+              <Wallet className="h-4 w-4 text-muted-foreground" />
               <span className="text-sm font-medium">₹0.00</span>
             </div>
           )}
@@ -146,4 +146,5 @@ export default function TopNav() {
     </nav>
   );
 }
+
 

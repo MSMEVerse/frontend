@@ -3,10 +3,10 @@
 import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
-import MSMEProfilePage from '@/components/pages/MSMEProfilePage';
-import CreatorProfilePage from '@/components/pages/CreatorProfilePage';
+import BrandMarketplacePage from '@/app/(creator)/brands/page';
+import MSMEMarketplacePage from '@/components/pages/MSMEMarketplacePage';
 
-export default function ProfilePage() {
+export default function MarketplacePage() {
   const { user, loading } = useAuth();
   const router = useRouter();
 
@@ -28,19 +28,16 @@ export default function ProfilePage() {
     return null;
   }
 
-  // Render role-specific profile page
-  switch (user.role) {
-    case 'MSME':
-      return <MSMEProfilePage />;
-    case 'CREATOR':
-      return <CreatorProfilePage />;
-    default:
-      return (
-        <div className="text-center py-12">
-          <p>Profile is only available for MSMEs and Creators</p>
-        </div>
-      );
+  // For creators, show campaign marketplace
+  if (user.role === 'CREATOR') {
+    return <BrandMarketplacePage />;
   }
-}
 
+  // For MSMEs, show creator marketplace
+  if (user.role === 'MSME') {
+    return <MSMEMarketplacePage />;
+  }
+
+  return null;
+}
 

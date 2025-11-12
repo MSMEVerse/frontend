@@ -38,10 +38,9 @@ const msmeNavItems: NavItem[] = [
 
 const creatorNavItems: NavItem[] = [
   { title: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
-  { title: 'My Profile', href: '/profile', icon: User },
+  { title: 'Profile', href: '/profile', icon: User },
+  { title: 'Marketplace', href: '/marketplace', icon: ShoppingBag },
   { title: 'Campaigns', href: '/campaigns', icon: Briefcase },
-  { title: 'Brand Marketplace', href: '/brands', icon: Building2 },
-  { title: 'My Portfolio', href: '/portfolio', icon: Image },
   { title: 'Wallet & Earnings', href: '/wallet', icon: Wallet },
   { title: 'Settings', href: '/settings', icon: Settings },
   { title: 'Support', href: '/support', icon: MessageSquare },
@@ -94,10 +93,10 @@ export default function Sidebar() {
                   'flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors',
                   isActive
                     ? 'bg-primary text-primary-foreground'
-                    : 'text-gray-700 hover:bg-gray-100 hover:text-gray-900'
+                    : 'text-foreground/80 hover:bg-muted hover:text-foreground'
                 )}
               >
-                <Icon className={cn('mr-3 h-5 w-5', isActive ? 'text-primary-foreground' : 'text-gray-400')} />
+                <Icon className={cn('mr-3 h-5 w-5', isActive ? 'text-primary-foreground' : 'text-muted-foreground')} />
                 {item.title}
               </Link>
             );

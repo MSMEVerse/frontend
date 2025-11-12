@@ -61,13 +61,22 @@ export default function CampaignDetailsPage() {
             </CardHeader>
             <CardContent className="space-y-4">
               <div>
-                <p className="text-sm font-medium text-muted-foreground">Budget</p>
-                <p className="text-lg font-semibold">₹{campaign.budget.toLocaleString()}</p>
+                <p className="text-sm font-medium text-muted-foreground">Duration</p>
+                <p className="text-lg">
+                  {format(new Date(campaign.startDate), 'MMM dd, yyyy')} - {format(new Date(campaign.endDate), 'MMM dd, yyyy')}
+                </p>
               </div>
-              <div>
-                <p className="text-sm font-medium text-muted-foreground">Deadline</p>
-                <p className="text-lg">{format(new Date(campaign.deadline), 'MMMM dd, yyyy')}</p>
-              </div>
+              {isMSME ? (
+                <div>
+                  <p className="text-sm font-medium text-muted-foreground">Total Budget</p>
+                  <p className="text-lg font-semibold">₹{campaign.totalBudget.toLocaleString()}</p>
+                </div>
+              ) : (
+                <div>
+                  <p className="text-sm font-medium text-muted-foreground">Offer</p>
+                  <p className="text-lg font-semibold">₹{campaign.budgetPerCreator.toLocaleString()}</p>
+                </div>
+              )}
               <div>
                 <p className="text-sm font-medium text-muted-foreground">Deliverables</p>
                 <ul className="list-disc list-inside space-y-1">
@@ -148,7 +157,7 @@ export default function CampaignDetailsPage() {
 
           <EscrowStatus
             status={campaign.status === 'COMPLETED' ? 'COMPLETED' : 'ONGOING'}
-            amount={campaign.budget}
+            amount={isMSME ? campaign.totalBudget : campaign.budgetPerCreator}
             progress={50}
           />
 
@@ -173,4 +182,5 @@ export default function CampaignDetailsPage() {
     </div>
   );
 }
+
 

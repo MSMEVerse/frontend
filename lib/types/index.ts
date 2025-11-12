@@ -96,24 +96,41 @@ export interface CreatorProfile {
 }
 
 // Campaign Types
-export type CampaignStatus = 'DRAFT' | 'PENDING' | 'ONGOING' | 'PENDING_REVIEW' | 'COMPLETED' | 'RELEASED' | 'CANCELLED';
+export type CampaignStatus = 'DRAFT' | 'PENDING' | 'OPEN' | 'ONGOING' | 'PENDING_REVIEW' | 'COMPLETED' | 'RELEASED' | 'CLOSED' | 'CANCELLED';
 export type CampaignType = 'PAID' | 'BARTER';
+
+export interface CampaignApplication {
+  id: string;
+  campaignId: string;
+  creatorId: string;
+  proposal: string;
+  status: 'PENDING' | 'APPROVED' | 'REJECTED';
+  createdAt: string;
+  creator?: User & { profile: CreatorProfile };
+}
 
 export interface Campaign {
   id: string;
   msmeId: string;
-  creatorId?: string;
+  creatorId?: string; // Deprecated: use selectedCreators instead
   title: string;
   objective: string;
-  budget: number;
+  budget: number; // Deprecated: use totalBudget instead
   status: CampaignStatus;
   type: CampaignType;
   deliverables: string[];
-  deadline: string;
+  deadline?: string; // Deprecated: use startDate and endDate instead
+  startDate: string;
+  endDate: string;
+  totalBudget: number; // Visible only to MSME
+  budgetPerCreator: number; // Visible to creators as "offer"
+  creatorsCount: number; // Calculated: totalBudget / budgetPerCreator
+  selectedCreators: string[]; // Array of creator IDs selected by brand
+  applications?: CampaignApplication[]; // Applications from creators
   createdAt: string;
   updatedAt: string;
   msme?: User & { profile: MSMEProfile };
-  creator?: User & { profile: CreatorProfile };
+  creator?: User & { profile: CreatorProfile }; // Deprecated: use selectedCreators
 }
 
 // Escrow & Transaction Types
@@ -145,15 +162,32 @@ export interface Transaction {
 // Message Types
 export interface Message {
   id: string;
-  campaignId: string;
+  campaignId?: string; // Optional for direct brand-creator chats
+  conversationId?: string; // For tracking conversation threads
   senderId: string;
   receiverId: string;
   content: string;
   attachments?: string[];
   read: boolean;
   createdAt: string;
+  isInitialMessage?: boolean; // Flag to track first message from creator
   sender?: User;
   receiver?: User;
+}
+
+// Conversation Types
+export interface Conversation {
+  id: string;
+  creatorId: string;
+  brandId: string; // MSME userId
+  lastMessage?: Message;
+  lastMessageAt?: string;
+  unreadCount?: number;
+  canCreatorReply: boolean; // true if brand has replied
+  createdAt: string;
+  updatedAt: string;
+  brand?: User & { profile: MSMEProfile };
+  creator?: User & { profile: CreatorProfile };
 }
 
 // Notification Types
@@ -218,6 +252,14 @@ export interface CampaignFilters {
   city?: string;
 }
 
+export interface BrandFilters {
+  niche?: string[];
+  businessName?: string; // For autocomplete
+  state?: string;
+  categories?: string[];
+  city?: string;
+}
+
 // Form Types
 export interface LoginFormData {
   email: string;
@@ -236,11 +278,15 @@ export interface RegisterFormData {
 export interface CampaignFormData {
   title: string;
   objective: string;
-  budget: number;
+  budget?: number; // Deprecated: use totalBudget instead
+  totalBudget: number;
+  budgetPerCreator: number;
   type: CampaignType;
   deliverables: string[];
-  deadline: string;
-  creatorId?: string;
+  deadline?: string; // Deprecated: use startDate and endDate instead
+  startDate: string;
+  endDate: string;
+  creatorId?: string; // Deprecated: not used in new system
 }
 
 // Export analytics types
