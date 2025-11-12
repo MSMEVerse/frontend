@@ -26,6 +26,9 @@ import {
   Clock,
   CheckCircle2,
   FileText as FileTextIcon,
+  Megaphone,
+  Globe,
+  Library,
 } from 'lucide-react';
 
 interface NavItem {
@@ -51,8 +54,28 @@ const msmeNavSections: NavSection[] = [
     label: 'Brands',
     items: [
       { title: 'Creator Marketplace', href: '/marketplace', icon: Users },
-      { title: 'Campaigns', href: '/campaigns', icon: Briefcase },
+      { title: 'Creator Campaign', href: '/campaigns', icon: Briefcase },
       { title: 'Barter', href: '/barter', icon: Repeat },
+    ],
+  },
+  {
+    label: 'Services',
+    items: [
+      {
+        title: 'Meta Ads Campaigns',
+        href: '/services/meta-ads',
+        icon: Megaphone,
+      },
+      {
+        title: 'Meta Ads Library',
+        href: '/services/meta-ads-library',
+        icon: Library,
+      },
+      {
+        title: 'Website Development',
+        href: '/services/website-development',
+        icon: Globe,
+      },
     ],
   },
   {
@@ -76,7 +99,7 @@ const creatorNavSections: NavSection[] = [
     items: [
       { title: 'Marketplace', href: '/marketplace', icon: ShoppingBag },
       {
-        title: 'Campaigns',
+        title: 'Creator Campaign',
         href: '/campaigns',
         icon: Briefcase,
         children: [

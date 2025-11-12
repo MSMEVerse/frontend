@@ -304,6 +304,160 @@ export type BarterContentStatus = 'PENDING' | 'APPROVED' | 'REVISION_REQUESTED';
 export type BarterDisputeStatus = 'OPEN' | 'IN_REVIEW' | 'RESOLVED' | 'CLOSED';
 export type BarterDisputeReason = 'PRODUCT_QUALITY' | 'PRODUCT_NOT_RECEIVED' | 'CONTENT_QUALITY' | 'CONTENT_NOT_SUBMITTED' | 'VALUE_MISMATCH' | 'OTHER';
 
+// Meta Ads Types
+export type MetaAdsPlatform = 'FACEBOOK' | 'INSTAGRAM' | 'BOTH';
+export type MetaAdsStatus = 'DRAFT' | 'ACTIVE' | 'PAUSED' | 'COMPLETED' | 'ARCHIVED';
+export type MetaAdsObjective = 'AWARENESS' | 'TRAFFIC' | 'ENGAGEMENT' | 'LEADS' | 'CONVERSIONS' | 'SALES';
+
+export interface MetaAdsTargetAudience {
+  ageRange?: { min: number; max: number };
+  genders?: string[];
+  locations?: string[];
+  interests?: string[];
+  behaviors?: string[];
+  customAudiences?: string[];
+  lookalikeAudiences?: string[];
+}
+
+export interface MetaAdsCreative {
+  id: string;
+  type: 'IMAGE' | 'VIDEO' | 'CAROUSEL' | 'SLIDESHOW';
+  url: string;
+  thumbnail?: string;
+  headline?: string;
+  description?: string;
+  callToAction?: string;
+}
+
+export interface MetaAdsPerformance {
+  impressions: number;
+  reach: number;
+  clicks: number;
+  ctr: number; // Click-through rate
+  cpc: number; // Cost per click
+  cpm: number; // Cost per 1000 impressions
+  spend: number;
+  conversions?: number;
+  conversionRate?: number;
+  roas?: number; // Return on ad spend
+  dateRange: {
+    start: string;
+    end: string;
+  };
+}
+
+export interface MetaAdsCampaign {
+  id: string;
+  msmeId: string;
+  name: string;
+  objective: MetaAdsObjective;
+  platform: MetaAdsPlatform;
+  budget: number;
+  dailyBudget?: number;
+  status: MetaAdsStatus;
+  targetAudience: MetaAdsTargetAudience;
+  adCreatives: MetaAdsCreative[];
+  adSets?: MetaAdsAdSet[];
+  startDate: string;
+  endDate?: string;
+  performance?: MetaAdsPerformance;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface MetaAdsAdSet {
+  id: string;
+  campaignId: string;
+  name: string;
+  budget: number;
+  bidStrategy: string;
+  optimizationGoal: string;
+  targetAudience: MetaAdsTargetAudience;
+  adCreatives: MetaAdsCreative[];
+  performance?: MetaAdsPerformance;
+}
+
+// Meta Ads Library Types
+export type InsightCategory = 'COMPANY_PERFORMANCE' | 'MARKET_TRENDS' | 'COMPETITOR_ANALYSIS';
+export type InsightType = 'ENGAGEMENT' | 'REACH' | 'CONVERSIONS' | 'AUDIENCE' | 'TREND' | 'RECOMMENDATION';
+
+export interface MetaAdsInsight {
+  id: string;
+  type: InsightType;
+  category: InsightCategory;
+  title: string;
+  description: string;
+  data: Record<string, any>;
+  recommendations?: string[];
+  dateRange: {
+    start: string;
+    end: string;
+  };
+  metrics: Record<string, number>;
+  createdAt: string;
+}
+
+export interface MarketTrend {
+  id: string;
+  category: string;
+  trend: string;
+  percentage: number;
+  timeframe: string;
+  recommendation: string;
+  data?: Record<string, any>;
+  createdAt: string;
+}
+
+export interface AdRecommendation {
+  id: string;
+  adType: string;
+  objective: MetaAdsObjective;
+  targetAudience: MetaAdsTargetAudience;
+  budget: number;
+  expectedROI: number;
+  reasoning: string;
+  bestPractices: string[];
+  priority: 'HIGH' | 'MEDIUM' | 'LOW';
+  createdAt: string;
+}
+
+// Website Development Types
+export type WebsitePageCategory = 'ESSENTIAL' | 'BUSINESS' | 'MARKETING' | 'LEGAL';
+export type WebsiteOrderStatus = 'DRAFT' | 'PENDING' | 'IN_PROGRESS' | 'COMPLETED' | 'CANCELLED';
+
+export interface WebsitePage {
+  id: string;
+  name: string;
+  description: string;
+  category: WebsitePageCategory;
+  price: number;
+  included: string[];
+  icon?: string;
+  preview?: string;
+}
+
+export interface WebsitePackage {
+  id: string;
+  name: string;
+  description: string;
+  totalPrice: number;
+  basePages: string[]; // Page IDs included in base package
+  features: string[];
+  deliveryTime: string;
+}
+
+export interface WebsiteOrder {
+  id: string;
+  msmeId: string;
+  packageId: string;
+  selectedPages: string[]; // Page IDs
+  status: WebsiteOrderStatus;
+  totalPrice: number;
+  createdAt: string;
+  updatedAt: string;
+  completedAt?: string;
+}
+
 export interface BarterProduct {
   id: string;
   brandId: string;

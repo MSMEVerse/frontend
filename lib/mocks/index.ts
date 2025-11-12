@@ -1,4 +1,4 @@
-import { User, Campaign, Transaction, Message, Notification, CreatorProfile, MSMEProfile, CampaignApplication, Conversation, BarterProduct, BarterDeal, BarterNegotiation, BarterDelivery, BarterContent, BarterDispute, BarterReview } from '../types';
+import { User, Campaign, Transaction, Message, Notification, CreatorProfile, MSMEProfile, CampaignApplication, Conversation, BarterProduct, BarterDeal, BarterNegotiation, BarterDelivery, BarterContent, BarterDispute, BarterReview, MetaAdsCampaign, MetaAdsInsight, MarketTrend, AdRecommendation, WebsitePage, WebsitePackage, WebsiteOrder } from '../types';
 
 // Mock Users - Expanded with lots of data
 export const mockUsers: User[] = [
@@ -2840,4 +2840,598 @@ mockBarterReviews.forEach(review => {
   review.reviewer = mockUsers.find(u => u.id === review.reviewerId);
   review.reviewee = mockUsers.find(u => u.id === review.revieweeId);
 });
+
+// Mock Meta Ads Campaigns
+export const mockMetaAdsCampaigns: MetaAdsCampaign[] = [
+  {
+    id: 'ma1',
+    msmeId: '1',
+    name: 'Summer Product Launch - Facebook & Instagram',
+    objective: 'AWARENESS',
+    platform: 'BOTH',
+    budget: 50000,
+    dailyBudget: 5000,
+    status: 'ACTIVE',
+    targetAudience: {
+      ageRange: { min: 25, max: 45 },
+      genders: ['all'],
+      locations: ['Mumbai', 'Delhi', 'Bangalore'],
+      interests: ['Technology', 'Gadgets', 'Lifestyle'],
+    },
+    adCreatives: [
+      {
+        id: 'ac1',
+        type: 'IMAGE',
+        url: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=800',
+        headline: 'New Product Launch',
+        description: 'Discover our latest innovation',
+        callToAction: 'Learn More',
+      },
+    ],
+    startDate: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
+    endDate: new Date(Date.now() + 25 * 24 * 60 * 60 * 1000).toISOString(),
+    performance: {
+      impressions: 125000,
+      reach: 95000,
+      clicks: 3500,
+      ctr: 2.8,
+      cpc: 14.3,
+      cpm: 400,
+      spend: 50050,
+      conversions: 120,
+      conversionRate: 3.4,
+      roas: 2.5,
+      dateRange: {
+        start: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
+        end: new Date().toISOString(),
+      },
+    },
+    createdAt: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(),
+    updatedAt: new Date().toISOString(),
+  },
+  {
+    id: 'ma2',
+    msmeId: '1',
+    name: 'Brand Awareness Campaign - Instagram',
+    objective: 'ENGAGEMENT',
+    platform: 'INSTAGRAM',
+    budget: 30000,
+    dailyBudget: 3000,
+    status: 'ACTIVE',
+    targetAudience: {
+      ageRange: { min: 18, max: 35 },
+      genders: ['all'],
+      locations: ['Mumbai', 'Pune'],
+      interests: ['Fashion', 'Lifestyle', 'Beauty'],
+    },
+    adCreatives: [
+      {
+        id: 'ac2',
+        type: 'VIDEO',
+        url: 'https://images.unsplash.com/photo-1445205170230-053b83016050?w=800',
+        headline: 'Style Your Life',
+        description: 'Explore our latest collection',
+        callToAction: 'Shop Now',
+      },
+    ],
+    startDate: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
+    endDate: new Date(Date.now() + 27 * 24 * 60 * 60 * 1000).toISOString(),
+    performance: {
+      impressions: 85000,
+      reach: 65000,
+      clicks: 2100,
+      ctr: 2.5,
+      cpc: 14.3,
+      cpm: 353,
+      spend: 30030,
+      conversions: 85,
+      conversionRate: 4.0,
+      roas: 2.8,
+      dateRange: {
+        start: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
+        end: new Date().toISOString(),
+      },
+    },
+    createdAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
+    updatedAt: new Date().toISOString(),
+  },
+  {
+    id: 'ma3',
+    msmeId: '4',
+    name: 'Lead Generation - Facebook',
+    objective: 'LEADS',
+    platform: 'FACEBOOK',
+    budget: 40000,
+    dailyBudget: 4000,
+    status: 'DRAFT',
+    targetAudience: {
+      ageRange: { min: 30, max: 50 },
+      genders: ['all'],
+      locations: ['Delhi', 'Gurgaon', 'Noida'],
+      interests: ['Business', 'Entrepreneurship'],
+    },
+    adCreatives: [
+      {
+        id: 'ac3',
+        type: 'IMAGE',
+        url: 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=800',
+        headline: 'Grow Your Business',
+        description: 'Get expert consultation',
+        callToAction: 'Get Started',
+      },
+    ],
+    startDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(),
+    createdAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
+    updatedAt: new Date().toISOString(),
+  },
+  {
+    id: 'ma4',
+    msmeId: '1',
+    name: 'Q4 Sales Campaign',
+    objective: 'SALES',
+    platform: 'BOTH',
+    budget: 75000,
+    dailyBudget: 7500,
+    status: 'COMPLETED',
+    targetAudience: {
+      ageRange: { min: 25, max: 45 },
+      genders: ['all'],
+      locations: ['Mumbai', 'Delhi', 'Bangalore', 'Pune'],
+      interests: ['Shopping', 'E-commerce', 'Deals'],
+    },
+    adCreatives: [
+      {
+        id: 'ac4',
+        type: 'CAROUSEL',
+        url: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800',
+        headline: 'Big Sale - Up to 50% Off',
+        description: 'Limited time offer',
+        callToAction: 'Shop Now',
+      },
+    ],
+    startDate: new Date(Date.now() - 60 * 24 * 60 * 60 * 1000).toISOString(),
+    endDate: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString(),
+    performance: {
+      impressions: 250000,
+      reach: 180000,
+      clicks: 8500,
+      ctr: 3.4,
+      cpc: 8.8,
+      cpm: 300,
+      spend: 74800,
+      conversions: 450,
+      conversionRate: 5.3,
+      roas: 4.2,
+      dateRange: {
+        start: new Date(Date.now() - 60 * 24 * 60 * 60 * 1000).toISOString(),
+        end: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString(),
+      },
+    },
+    createdAt: new Date(Date.now() - 65 * 24 * 60 * 60 * 1000).toISOString(),
+    updatedAt: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString(),
+  },
+];
+
+// Mock Meta Ads Insights
+export const mockMetaAdsInsights: MetaAdsInsight[] = [
+  {
+    id: 'mi1',
+    type: 'ENGAGEMENT',
+    category: 'COMPANY_PERFORMANCE',
+    title: 'High Engagement on Video Ads',
+    description: 'Your video ads are performing 35% better than image ads in terms of engagement rate.',
+    data: {
+      videoEngagementRate: 4.2,
+      imageEngagementRate: 3.1,
+      improvement: 35,
+    },
+    recommendations: [
+      'Increase budget allocation for video ads',
+      'Create more video content for upcoming campaigns',
+      'Test different video lengths to optimize engagement',
+    ],
+    dateRange: {
+      start: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString(),
+      end: new Date().toISOString(),
+    },
+    metrics: {
+      videoEngagement: 4200,
+      imageEngagement: 3100,
+      totalEngagement: 7300,
+    },
+    createdAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
+  },
+  {
+    id: 'mi2',
+    type: 'AUDIENCE',
+    category: 'COMPANY_PERFORMANCE',
+    title: 'Optimal Audience Age Group',
+    description: 'Users aged 25-35 show the highest conversion rates for your campaigns.',
+    data: {
+      bestAgeGroup: '25-35',
+      conversionRate: 5.8,
+      averageConversionRate: 3.2,
+    },
+    recommendations: [
+      'Focus targeting on 25-35 age group',
+      'Create age-specific ad creatives',
+      'Adjust budget allocation to prioritize this demographic',
+    ],
+    dateRange: {
+      start: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString(),
+      end: new Date().toISOString(),
+    },
+    metrics: {
+      age25_35Conversions: 580,
+      totalConversions: 1000,
+      conversionRate: 5.8,
+    },
+    createdAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
+  },
+  {
+    id: 'mi3',
+    type: 'TREND',
+    category: 'MARKET_TRENDS',
+    title: 'Rising Interest in Sustainable Products',
+    description: 'Market trends show 45% increase in searches for eco-friendly products in your category.',
+    data: {
+      trendIncrease: 45,
+      category: 'Eco-friendly Products',
+      timeframe: 'Last 3 months',
+    },
+    recommendations: [
+      'Create campaigns highlighting sustainability features',
+      'Use eco-friendly messaging in ad creatives',
+      'Target audiences interested in environmental causes',
+    ],
+    dateRange: {
+      start: new Date(Date.now() - 90 * 24 * 60 * 60 * 1000).toISOString(),
+      end: new Date().toISOString(),
+    },
+    metrics: {
+      trendPercentage: 45,
+      searchVolume: 125000,
+    },
+    createdAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
+  },
+  {
+    id: 'mi4',
+    type: 'REACH',
+    category: 'COMPANY_PERFORMANCE',
+    title: 'Instagram Outperforms Facebook',
+    description: 'Instagram campaigns are reaching 30% more users at 20% lower cost per reach.',
+    data: {
+      instagramReach: 95000,
+      facebookReach: 73000,
+      costDifference: 20,
+    },
+    recommendations: [
+      'Shift more budget to Instagram campaigns',
+      'Optimize Facebook targeting to improve reach',
+      'Test Instagram-specific ad formats',
+    ],
+    dateRange: {
+      start: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString(),
+      end: new Date().toISOString(),
+    },
+    metrics: {
+      instagramReach: 95000,
+      facebookReach: 73000,
+      totalReach: 168000,
+    },
+    createdAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
+  },
+];
+
+// Mock Market Trends
+export const mockMarketTrends: MarketTrend[] = [
+  {
+    id: 'mt1',
+    category: 'Technology',
+    trend: 'Mobile-first shopping experiences',
+    percentage: 65,
+    timeframe: 'Last 6 months',
+    recommendation: 'Optimize ad creatives for mobile viewing and ensure landing pages are mobile-responsive.',
+    data: {
+      mobileTraffic: 65000,
+      desktopTraffic: 35000,
+    },
+    createdAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
+  },
+  {
+    id: 'mt2',
+    category: 'Fashion',
+    trend: 'Video content engagement',
+    percentage: 80,
+    timeframe: 'Last 3 months',
+    recommendation: 'Invest in video ad production, especially short-form videos (15-30 seconds) for better engagement.',
+    data: {
+      videoEngagement: 80000,
+      imageEngagement: 20000,
+    },
+    createdAt: new Date(Date.now() - 4 * 24 * 60 * 60 * 1000).toISOString(),
+  },
+  {
+    id: 'mt3',
+    category: 'Food & Beverage',
+    trend: 'Local business support',
+    percentage: 55,
+    timeframe: 'Last 4 months',
+    recommendation: 'Highlight local sourcing and community support in ad messaging to resonate with current consumer sentiment.',
+    data: {
+      localSearchVolume: 55000,
+    },
+    createdAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
+  },
+];
+
+// Mock Ad Recommendations
+export const mockAdRecommendations: AdRecommendation[] = [
+  {
+    id: 'ar1',
+    adType: 'Video Carousel',
+    objective: 'CONVERSIONS',
+    targetAudience: {
+      ageRange: { min: 25, max: 40 },
+      genders: ['all'],
+      locations: ['Mumbai', 'Delhi', 'Bangalore'],
+      interests: ['Technology', 'Lifestyle'],
+    },
+    budget: 50000,
+    expectedROI: 3.5,
+    reasoning: 'Based on your past performance, video carousel ads targeting tech-savvy audiences in metro cities have shown 3.5x ROI.',
+    bestPractices: [
+      'Use 3-5 product images in carousel',
+      'Include clear call-to-action buttons',
+      'Test different headline variations',
+      'Run during peak engagement hours (7-9 PM)',
+    ],
+    priority: 'HIGH',
+    createdAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
+  },
+  {
+    id: 'ar2',
+    adType: 'Instagram Story Ads',
+    objective: 'ENGAGEMENT',
+    targetAudience: {
+      ageRange: { min: 18, max: 30 },
+      genders: ['all'],
+      locations: ['Mumbai', 'Pune'],
+      interests: ['Fashion', 'Beauty', 'Lifestyle'],
+    },
+    budget: 25000,
+    expectedROI: 2.8,
+    reasoning: 'Instagram Story ads are highly effective for younger demographics and show strong engagement rates in your industry.',
+    bestPractices: [
+      'Keep videos under 15 seconds',
+      'Use vertical format (9:16)',
+      'Add interactive elements (polls, questions)',
+      'Include swipe-up or link stickers',
+    ],
+    priority: 'MEDIUM',
+    createdAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
+  },
+  {
+    id: 'ar3',
+    adType: 'Lead Generation Ads',
+    objective: 'LEADS',
+    targetAudience: {
+      ageRange: { min: 30, max: 50 },
+      genders: ['all'],
+      locations: ['Delhi', 'Gurgaon'],
+      interests: ['Business', 'Entrepreneurship', 'Professional Services'],
+    },
+    budget: 40000,
+    expectedROI: 4.2,
+    reasoning: 'Lead gen ads with pre-filled forms have shown excellent conversion rates for B2B services in your target locations.',
+    bestPractices: [
+      'Use lead generation ad format with instant forms',
+      'Keep form fields minimal (name, email, phone)',
+      'Offer valuable lead magnet (ebook, consultation)',
+      'Follow up within 24 hours',
+    ],
+    priority: 'HIGH',
+    createdAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
+  },
+];
+
+// Mock Website Pages
+export const mockWebsitePages: WebsitePage[] = [
+  // Essential Pages
+  {
+    id: 'wp1',
+    name: 'Home Page',
+    description: 'Landing page with hero section, key features, and call-to-action',
+    category: 'ESSENTIAL',
+    price: 0,
+    included: ['Hero section', 'Features showcase', 'CTA buttons', 'Responsive design'],
+    icon: 'Home',
+  },
+  {
+    id: 'wp2',
+    name: 'About Us',
+    description: 'Company story, mission, vision, and team information',
+    category: 'ESSENTIAL',
+    price: 0,
+    included: ['Company history', 'Mission & Vision', 'Team section', 'Values'],
+    icon: 'Info',
+  },
+  {
+    id: 'wp3',
+    name: 'Services',
+    description: 'Detailed service offerings with descriptions and pricing',
+    category: 'ESSENTIAL',
+    price: 0,
+    included: ['Service listings', 'Descriptions', 'Pricing tables', 'Service categories'],
+    icon: 'Briefcase',
+  },
+  {
+    id: 'wp4',
+    name: 'Contact',
+    description: 'Contact form, address, phone, email, and map integration',
+    category: 'ESSENTIAL',
+    price: 0,
+    included: ['Contact form', 'Address & map', 'Phone & email', 'Social links'],
+    icon: 'Mail',
+  },
+  // Business Pages
+  {
+    id: 'wp5',
+    name: 'Products/Portfolio',
+    description: 'Showcase your products or portfolio with images and descriptions',
+    category: 'BUSINESS',
+    price: 2000,
+    included: ['Product gallery', 'Image optimization', 'Product details', 'Filtering'],
+    icon: 'Package',
+  },
+  {
+    id: 'wp6',
+    name: 'Team',
+    description: 'Meet the team page with profiles and photos',
+    category: 'BUSINESS',
+    price: 1500,
+    included: ['Team member profiles', 'Photos', 'Bio sections', 'Social links'],
+    icon: 'Users',
+  },
+  {
+    id: 'wp7',
+    name: 'Testimonials',
+    description: 'Customer reviews and testimonials section',
+    category: 'BUSINESS',
+    price: 1500,
+    included: ['Testimonial cards', 'Star ratings', 'Customer photos', 'Carousel display'],
+    icon: 'Star',
+  },
+  {
+    id: 'wp8',
+    name: 'Gallery',
+    description: 'Image gallery with lightbox and filtering options',
+    category: 'BUSINESS',
+    price: 2000,
+    included: ['Image gallery', 'Lightbox view', 'Categories', 'Responsive grid'],
+    icon: 'Image',
+  },
+  // Marketing Pages
+  {
+    id: 'wp9',
+    name: 'Blog',
+    description: 'Blog section with categories, tags, and search functionality',
+    category: 'MARKETING',
+    price: 3000,
+    included: ['Blog listing', 'Categories & tags', 'Search', 'Related posts'],
+    icon: 'FileText',
+  },
+  {
+    id: 'wp10',
+    name: 'FAQ',
+    description: 'Frequently asked questions with accordion layout',
+    category: 'MARKETING',
+    price: 1500,
+    included: ['FAQ accordion', 'Search functionality', 'Categories', 'Contact CTA'],
+    icon: 'HelpCircle',
+  },
+  {
+    id: 'wp11',
+    name: 'Case Studies',
+    description: 'Showcase successful projects and client stories',
+    category: 'MARKETING',
+    price: 2500,
+    included: ['Case study cards', 'Project details', 'Results metrics', 'Image gallery'],
+    icon: 'FolderOpen',
+  },
+  {
+    id: 'wp12',
+    name: 'Newsletter Signup',
+    description: 'Email subscription form with integration',
+    category: 'MARKETING',
+    price: 1000,
+    included: ['Signup form', 'Email integration', 'Thank you page', 'Confirmation email'],
+    icon: 'Mail',
+  },
+  // Legal Pages
+  {
+    id: 'wp13',
+    name: 'Privacy Policy',
+    description: 'Privacy policy page with standard legal content',
+    category: 'LEGAL',
+    price: 1000,
+    included: ['Legal content', 'GDPR compliance', 'Data collection info', 'User rights'],
+    icon: 'Shield',
+  },
+  {
+    id: 'wp14',
+    name: 'Terms & Conditions',
+    description: 'Terms and conditions page',
+    category: 'LEGAL',
+    price: 1000,
+    included: ['Terms content', 'Service terms', 'User agreement', 'Legal compliance'],
+    icon: 'FileText',
+  },
+  {
+    id: 'wp15',
+    name: 'Refund Policy',
+    description: 'Refund and cancellation policy page',
+    category: 'LEGAL',
+    price: 1000,
+    included: ['Refund terms', 'Cancellation policy', 'Process details', 'Contact info'],
+    icon: 'RotateCcw',
+  },
+  {
+    id: 'wp16',
+    name: 'Disclaimer',
+    description: 'Website disclaimer and liability information',
+    category: 'LEGAL',
+    price: 1000,
+    included: ['Disclaimer content', 'Liability terms', 'Accuracy statement', 'Legal notice'],
+    icon: 'AlertCircle',
+  },
+];
+
+// Mock Website Packages
+export const mockWebsitePackages: WebsitePackage[] = [
+  {
+    id: 'wpkg1',
+    name: 'Fixed Starter Website',
+    description: 'Complete starter website package with essential pages',
+    totalPrice: 25000,
+    basePages: ['wp1', 'wp2', 'wp3', 'wp4'], // Home, About, Services, Contact
+    features: [
+      'Responsive design (mobile, tablet, desktop)',
+      'SEO optimization',
+      'Contact form integration',
+      'Social media integration',
+      'Google Analytics setup',
+      'Basic hosting setup',
+      'Domain configuration',
+      'SSL certificate',
+      '1 month free support',
+    ],
+    deliveryTime: '2-3 weeks',
+  },
+];
+
+// Mock Website Orders
+export const mockWebsiteOrders: WebsiteOrder[] = [
+  {
+    id: 'wo1',
+    msmeId: '1',
+    packageId: 'wpkg1',
+    selectedPages: ['wp1', 'wp2', 'wp3', 'wp4', 'wp5', 'wp7'],
+    status: 'IN_PROGRESS',
+    totalPrice: 27000, // 25000 base + 2000 (Products) + 0 (others)
+    createdAt: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000).toISOString(),
+    updatedAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
+  },
+  {
+    id: 'wo2',
+    msmeId: '4',
+    packageId: 'wpkg1',
+    selectedPages: ['wp1', 'wp2', 'wp3', 'wp4', 'wp9', 'wp10'],
+    status: 'COMPLETED',
+    totalPrice: 30000, // 25000 base + 3000 (Blog) + 1500 (FAQ) + 500 (rounding)
+    createdAt: new Date(Date.now() - 45 * 24 * 60 * 60 * 1000).toISOString(),
+    updatedAt: new Date(Date.now() - 20 * 24 * 60 * 60 * 1000).toISOString(),
+    completedAt: new Date(Date.now() - 20 * 24 * 60 * 60 * 1000).toISOString(),
+  },
+];
 
